@@ -1,0 +1,142 @@
+Var 
+ ulasimDegistir: TclStyleForm;
+ sehirlerArasiUlasimUcretDegistir, sehirIciUlasimUcretDegistir: TclProEdit;
+ sehirlerArasiUlasimTuruDegistir, sehirIciUlasimTuruDegistir: TCLComboBox;
+ ulasimDegistirLabel1, ulasimDegistirLabel2: TclProLabel;
+ ulasimDegistirPanel1: TclProPanel;
+ ulasimDegisiklikKaydet: TclProButton;
+ intercityBilgi, urbanBilgi: String;
+ 
+ 
+void UpdateUlasimData;
+{
+  urbanBilgi=sehirIciUlasimTuruDegistir.GetItemIndex(sehirIciUlasimTuruDegistir.ItemIndex);
+  intercityBilgi=sehirlerArasiUlasimTuruDegistir.GetItemIndex(sehirlerArasiUlasimTuruDegistir.ItemIndex);
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'UPDATE Transport SET intercity_transport_ucret=' +QuotedStr(sehirlerArasiUlasimUcretDegistir.Text)+ 'And urban_transport_ucret= ' +QuotedStr(sehirIciUlasimUcretDegistir.Text)+  'WHERE intercity_transport_turu = ' +QuotedStr(intercityBilgi)+ 'or urban_transport_turu=' +QuotedStr(urbanBilgi);
+    ShowMessage(Clomosy.DBSQLiteQuery.SQL.Text);
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Müze Bilgileri güncelleme başarılı!');
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+
+ 
+{
+  ulasimDegistir=TclStyleForm.Create(Self);
+  ulasimDegistir.SetFormBGImage('https://i.pinimg.com/originals/8e/b7/c4/8eb7c44488ef0ee959748a086edec636.jpg');
+  
+  ulasimDegistirPanel1=ulasimDegistir.AddNewProPanel(ulasimDegistir,'ulasimDegistirPanel1');
+  clComponent.SetupComponent(ulasimDegistirPanel1,
+  '{
+  "Align": "alCenter",
+  "Width" :500, 
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+  ulasimDegistirLabel1=ulasimDegistir.AddNewProLabel(ulasimDegistirPanel1,'ulasimDegistirLabel1','Bilgilerini Değiştirmek istediğiniz' + #13#10 +'Ulaşımın Ücret Bilgisini Güncelleyiniz:');
+  clComponent.SetupComponent(ulasimDegistirLabel1,'{
+  "MarginBottom": 700,
+  "Width": 600,
+  "Height": 100,
+  "TextColor":"#8e1414",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+   
+   
+  sehirIciUlasimTuruDegistir = ulasimDegistir.AddNewComboBox(ulasimDegistirPanel1,'sehirIciUlasimTuruDegistir');
+  sehirIciUlasimTuruDegistir.Width=400;
+  sehirIciUlasimTuruDegistir.Height=50;
+  sehirIciUlasimTuruDegistir.Position.Y=5;
+  sehirIciUlasimTuruDegistir.Position.X=50;
+  sehirIciUlasimTuruDegistir.AddItem('Metro','01');
+  sehirIciUlasimTuruDegistir.AddItem('Tramvay','02');
+  sehirIciUlasimTuruDegistir.AddItem('Dolmuş','03');
+  sehirIciUlasimTuruDegistir.AddItem('Taksi','04');
+  sehirIciUlasimTuruDegistir.AddItem('Araba','05'); 
+  sehirIciUlasimTuruDegistir.AddItem('Bisiklet','06');
+  sehirIciUlasimTuruDegistir.AddItem('Scooter','07');
+  sehirIciUlasimTuruDegistir.AddItem('Yürüyüş','08'); 
+  
+  sehirlerArasiUlasimTuruDegistir = ulasimDegistir.AddNewComboBox(ulasimDegistirPanel1,'sehirlerArasiUlasimTuruDegistir');
+  sehirlerArasiUlasimTuruDegistir.Width=400;
+  sehirlerArasiUlasimTuruDegistir.Height=50;
+  sehirlerArasiUlasimTuruDegistir.Position.Y=100;
+  sehirlerArasiUlasimTuruDegistir.Position.X=50;
+  sehirlerArasiUlasimTuruDegistir.AddItem('Tren','01');
+  sehirlerArasiUlasimTuruDegistir.AddItem('Uçak','02');
+  sehirlerArasiUlasimTuruDegistir.AddItem('Otobüs','03');
+  sehirlerArasiUlasimTuruDegistir.AddItem('Araba','04');
+  sehirlerArasiUlasimTuruDegistir.AddItem('Otostop','05'); 
+  
+
+  sehirIciUlasimUcretDegistir=ulasimDegistir.AddNewProEdit(ulasimDegistirPanel1, 'sehirIciUlasimUcretDegistir', 'Şehir İçi Ulaşım Ücreti:');
+  clComponent.SetupComponent(sehirIciUlasimUcretDegistir,'{
+  "MarginBottom": 350,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  sehirIciUlasimUcretDegistir.clTypeOfField = taFloat;
+  
+  
+  
+  sehirlerArasiUlasimUcretDegistir=ulasimDegistir.AddNewProEdit(ulasimDegistirPanel1, 'sehirlerArasiUlasimUcretDegistir', 'Şehirler Arası Ulaşım Ücreti:');
+  clComponent.SetupComponent(sehirlerArasiUlasimUcretDegistir,'{
+  "MarginBottom": 150,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  sehirlerArasiUlasimUcretDegistir.clTypeOfField = taFloat;
+
+  
+  ulasimDegisiklikKaydet=ulasimDegistir.AddNewProButton(ulasimDegistirPanel1, 'ulasimDegisiklikKaydet', ' Güncellemeleri Kaydet');
+   clComponent.SetupComponent(ulasimDegisiklikKaydet,'{
+   "MarginTop":700,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#e2c1c8"
+    }');
+    
+  ulasimDegistir.AddNewEvent(ulasimDegisiklikKaydet,tbeOnClick,'UpdateUlasimData');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+   
+  ulasimDegistir.Run;
+}

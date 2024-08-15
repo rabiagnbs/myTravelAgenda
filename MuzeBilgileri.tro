@@ -1,0 +1,155 @@
+var 
+  muzeBilgileri: TclStyleForm;
+  muzeSayisi, m: Integer;
+  VerticalScrollBox: TclVertScrollBox;
+  muzeIsim, muzeYorum, muzeTuru, muzeUcret: TclProEdit;
+  muzeResim: TClProImage;
+  muzeBilgiKayit: TClProButton;
+  database, password: String;
+  
+  
+void muzeBilgiKayitEt;
+{
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Museums (muze_isim, muze_turu, muze_ucret, muze_yorum) VALUES ('+QuotedStr(muzeIsim.Text)+', '+QuotedStr(muzeTuru.Text)+'
+    , '+QuotedStr(muzeUcret.Text)+', '+QuotedStr(muzeYorum.Text)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Müze Bilgileri Başarı İle Eklenmiştir✅');
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+  
+{
+  muzeBilgileri=TclStyleForm.Create(Self);
+  muzeBilgileri.SetFormBGImage('https://i.hizliresim.com/cf0n6nk.png');
+  muzeSayisi=muzeSayi.value;
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+  
+  VerticalScrollBox = muzeBilgileri.AddNewVertScrollBox(muzeBilgileri,'ScrollY');
+  VerticalScrollBox.Align = alMostTop;
+  VerticalScrollBox.Height = TForm(muzeBilgileri).clientHeight;
+  
+   muzeResim= muzeBilgileri.AddNewProImage(VerticalScrollBox, 'muzeResim');
+   clComponent.SetupComponent(muzeResim,'{
+   "MarginBottom": 1200,
+   "Width" :390, 
+   "Height":260,
+   "BorderColor":"#6f86d1",
+   "BorderWidth":2,
+   "ImgUrl":"https://i.pinimg.com/originals/07/fb/b1/07fbb197f3a930860aa1635d18144142.jpg",
+   "ImgFit":"yes"
+   }'); 
+   
+   muzeIsim=muzeBilgileri.AddNewProEdit(VerticalScrollBox, 'muzeIsim', 'Müzenin İsmi');
+   clComponent.SetupComponent(muzeIsim,'{
+   "MarginBottom": 800,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#24021a",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#e6b3d6"
+   }');
+   
+   muzeTuru=muzeBilgileri.AddNewProEdit(VerticalScrollBox, 'muzeTuru', 'Müzenin Türü Nedir?');
+   clComponent.SetupComponent(muzeTuru,'{
+   "MarginBottom": 650,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#24021a",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#e6b3d6"
+   }');
+   
+   
+   muzeUcret=muzeBilgileri.AddNewProEdit(VerticalScrollBox, 'muzeUcret', 'Müze Giriş Ücreti Nedir?');
+   clComponent.SetupComponent(muzeUcret,'{
+   "MarginBottom": 500,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#24021a",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#e6b3d6"
+   }');
+   
+   muzeUcret.clTypeOfField = taFloat; 
+
+   muzeYorum=muzeBilgileri.AddNewProEdit(VerticalScrollBox, 'muzeYorum', 'Müze hakkındaki görüşleriniz nelerdir?');
+   clComponent.SetupComponent(muzeYorum,'{
+   "MarginBottom": 250,
+   "Width" :400, 
+   "Height":150,
+   "TextColor":"#24021a",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#e6b3d6"
+   }');
+ 
+   muzeBilgiKayit=muzeBilgileri.AddNewProButton(VerticalScrollBox, 'muzeBilgiKayit', ' Bilgileri Kaydet ');
+   clComponent.SetupComponent(muzeBilgiKayit,'{
+   "MarginBottom":100,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :400, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#e69ace"
+    }');
+
+    muzeBilgileri.AddNewEvent(muzeBilgiKayit,tbeOnClick,'muzeBilgiKayitEt'); 
+     
+     database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3';     
+  password = '';
+
+  /*try
+    Clomosy.DBSQLiteConnect(database , password);
+    
+    Clomosy.DBSQLiteQuery.Sql.Text = 'CREATE TABLE Museums(muze_id INTEGER PRIMARY KEY AUTOINCREMENT, muze_isim Text,  muze_turu Text, muze_ucret INTEGER, muze_yorum Text)';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanına tablo ekleme işlemi başarılı!');
+  except
+    ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }*/
+  
+
+  
+
+  
+  muzeBilgileri.Run;
+}

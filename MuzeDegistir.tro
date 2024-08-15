@@ -1,0 +1,178 @@
+Var 
+ muzeDegistir: TclStyleForm;
+ muzeTuruDegistir, muzeUcretDegistir,muzeYorumDegistir: TclProEdit; 
+ muzeDegistirLabel1, muzeDegistirLabel2: TclProLabel;
+ muzeDegistirPanel1: TclProPanel;
+ muzeDegisiklikKaydet: TclProButton;
+ muzeItem: TCLComboBox;
+ Qry4: TClSQLiteQuery;
+ yeniMuzeIsim: String;
+ 
+void UpdateMuzeData;
+{
+ yeniMuzeIsim=muzeItem.GetItemIndex(muzeItem.ItemIndex);
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'UPDATE Museums SET muze_turu = ' +QuotedStr(muzeTuruDegistir.Text)+  ' AND muze_ucret=' +QuotedStr(muzeUcretDegistir.Text)+ 
+    ' AND muze_yorum=' +QuotedStr(muzeYorumDegistir.Text)+' WHERE muze_isim = ' +QuotedStr(yeniMuzeIsim);
+    ShowMessage(Clomosy.DBSQLiteQuery.SQL.Text);
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Müze Bilgileri güncelleme başarılı!');
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+ 
+{
+  muzeDegistir=TclStyleForm.Create(Self);
+  muzeDegistir.SetFormBGImage('https://i.pinimg.com/originals/8e/b7/c4/8eb7c44488ef0ee959748a086edec636.jpg');
+  
+  muzeDegistirPanel1=muzeDegistir.AddNewProPanel(muzeDegistir,'muzeDegistirPanel1');
+  clComponent.SetupComponent(muzeDegistirPanel1,
+  '{
+  "Align": "alCenter",
+  "Width" :500, 
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+  muzeDegistirLabel1=muzeDegistir.AddNewProLabel(muzeDegistirPanel1,'muzeDegistirLabel1','Bilgilerini Değiştirmek istediğiniz' + #13#10 +'müzenin ismini giriniz:');
+  clComponent.SetupComponent(muzeDegistirLabel1,'{
+  "MarginBottom": 700,
+  "Width": 300,
+  "Height": 100,
+  "TextColor":"#8e1414",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+   
+   
+   muzeItem = muzeDegistir.AddNewComboBox(muzeDegistir,'muzeItem');
+   muzeItem.Width = 150;
+   muzeItem.Position.Y=160;
+   muzeItem.Position.X=130;
+
+   
+   try
+    Qry4 = Clomosy.DBSQLiteQueryWith('SELECT muze_isim FROM Museums');
+    Qry4.OpenOrExecute;
+    
+    while(not (Qry4.Eof))
+   {
+  	muzeItem.AddItem(Qry4.FieldByName('muze_isim').AsString,Qry4.FieldByName('muze_isim').AsString);
+  	Qry4.Next;
+   }
+ 
+    except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+  /*muzeIsimDegistir=muzeDegistir.AddNewProEdit(muzeDegistirPanel1, 'muzeIsimDegistir', 'Müze İsim:');
+  clComponent.SetupComponent(muzeIsimDegistir,'{
+  "MarginBottom": 550,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');*/
+  
+  muzeDegistirLabel2=muzeDegistir.AddNewProLabel(muzeDegistirPanel1,'muzeDegistirLabel2',' Bilgileri Güncelleyiniz ✍️ ');
+  clComponent.SetupComponent(muzeDegistirLabel2,'{
+  "MarginBottom": 450,
+  "Width": 600,
+  "Height": 100,
+  "TextColor":"#8e1414",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+  
+  muzeTuruDegistir=muzeDegistir.AddNewProEdit(muzeDegistirPanel1, 'muzeTuruDegistir', 'Müze Türü:');
+  clComponent.SetupComponent(muzeTuruDegistir,'{
+  "MarginBottom": 350,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  muzeUcretDegistir=muzeDegistir.AddNewProEdit(muzeDegistirPanel1, 'muzeUcretDegistir', 'Müze Giriş Ücreti:');
+  clComponent.SetupComponent(muzeUcretDegistir,'{
+  "MarginBottom": 250,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  muzeUcretDegistir.clTypeOfField = taFloat;
+  
+  muzeYorumDegistir=muzeDegistir.AddNewProEdit(muzeDegistirPanel1, 'muzeYorumDegistir', 'Müze Yorumu:');
+  clComponent.SetupComponent(muzeYorumDegistir,'{
+  "MarginBottom": 150,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  muzeDegisiklikKaydet=muzeDegistir.AddNewProButton(muzeDegistirPanel1, 'muzeDegisiklikKaydet', ' Güncellemeleri Kaydet');
+   clComponent.SetupComponent(muzeDegisiklikKaydet,'{
+   "MarginTop":500,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#e2c1c8"
+    }');
+    
+  muzeDegistir.AddNewEvent(muzeDegisiklikKaydet,tbeOnClick,'UpdateMuzeData');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+   
+  muzeDegistir.Run;
+}

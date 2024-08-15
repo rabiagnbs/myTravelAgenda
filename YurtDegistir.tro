@@ -1,0 +1,197 @@
+Var 
+ yurtDegistir: TclStyleForm;
+ yurtIsimDegistir, yurtTuruDegistir, yurtUcretDegistir,yurtYorumDegistir, yurtPuanDegistir: TclProEdit; 
+ yurtDegistirLabel1, yurtDegistirLabel2: TclProLabel;
+ yurtDegistirPanel1: TclProPanel;
+ yurtDegisiklikKaydet: TclProButton;
+ yeniYurtIsim: String;
+ yurtItem: TCLComboBox;
+ Qry6: TClSQLiteQuery;
+ 
+ 
+ void UpdateYurtData;
+{
+ yeniYurtIsim=yurtItem.GetItemIndex(yurtItem.ItemIndex);
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'UPDATE Accomodations SET accomodation_turu = ' +QuotedStr(yurtTuruDegistir.Text)+  'AND accomodation_ucret=' +QuotedStr(yurtUcretDegistir.Text)+ 
+    'AND accomodation_puan=' +QuotedStr(yurtPuanDegistir.Text)+'AND accomodation_yorum=' +QuotedStr(yurtYorumDegistir.Text)+' WHERE accomodation_isim = ' +QuotedStr(yeniYurtIsim);
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Konaklama Bilgileri güncelleme başarılı!');
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+
+ 
+{
+  yurtDegistir=TclStyleForm.Create(Self);
+  yurtDegistir.SetFormBGImage('https://i.pinimg.com/originals/8e/b7/c4/8eb7c44488ef0ee959748a086edec636.jpg');
+  
+  yurtDegistirPanel1=yurtDegistir.AddNewProPanel(yurtDegistir,'yurtDegistirPanel1');
+  clComponent.SetupComponent(yurtDegistirPanel1,
+  '{
+  "Align": "alCenter",
+  "Width" :500, 
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+  yurtDegistirLabel1=yurtDegistir.AddNewProLabel(yurtDegistirPanel1,'yurtDegistirLabel1','Bilgilerini Değiştirmek istediğiniz' + #13#10 +'Konaklamanın ismini giriniz:');
+  clComponent.SetupComponent(yurtDegistirLabel1,'{
+  "MarginBottom": 700,
+  "Width": 600,
+  "Height": 100,
+  "TextColor":"#8e1414",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+   
+   yurtItem = yurtDegistir.AddNewComboBox(yurtDegistir,'yurtItem');
+   yurtItem.Width = 150;
+   yurtItem.Position.Y=160;
+   yurtItem.Position.X=130;
+
+   
+   try
+    Qry6 = Clomosy.DBSQLiteQueryWith('SELECT accomodation_isim FROM Accomodations');
+    Qry6.OpenOrExecute;
+    
+    while(not (Qry6.Eof))
+   {
+  	yurtItem.AddItem(Qry6.FieldByName('accomodation_isim').AsString,Qry6.FieldByName('accomodation_isim').AsString);
+  	Qry6.Next;
+   }
+ 
+    except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+  /*
+  yurtIsimDegistir=yurtDegistir.AddNewProEdit(yurtDegistirPanel1, 'yurtIsimDegistir', 'Konaklama İsim:');
+  clComponent.SetupComponent(yurtIsimDegistir,'{
+  "MarginBottom": 550,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }'); */
+  
+  yurtDegistirLabel2=yurtDegistir.AddNewProLabel(yurtDegistirPanel1,'yurtDegistirLabel2',' Bilgileri Güncelleyiniz ✍️ ');
+  clComponent.SetupComponent(yurtDegistirLabel2,'{
+  "MarginBottom": 450,
+  "Width": 600,
+  "Height": 100,
+  "TextColor":"#8e1414",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+  
+  yurtTuruDegistir=yurtDegistir.AddNewProEdit(yurtDegistirPanel1, 'yurtTuruDegistir', 'Konaklama Türü:');
+  clComponent.SetupComponent(yurtTuruDegistir,'{
+  "MarginBottom": 350,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  yurtPuanDegistir=yurtDegistir.AddNewProEdit(yurtDegistirPanel1, 'yurtPuanDegistir', 'Konaklama Puan:');
+  clComponent.SetupComponent(yurtPuanDegistir,'{
+  "MarginBottom": 250,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  
+  
+  yurtUcretDegistir=yurtDegistir.AddNewProEdit(yurtDegistirPanel1, 'yurtUcretDegistir', 'Günlük Konaklama Ücreti:');
+  clComponent.SetupComponent(yurtUcretDegistir,'{
+  "MarginBottom": 150,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  yurtYorumDegistir=yurtDegistir.AddNewProEdit(yurtDegistirPanel1, 'yurtYorumDegistir', 'Konaklama Yorumu:');
+  clComponent.SetupComponent(yurtYorumDegistir,'{
+  "MarginBottom": 50,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+   yurtDegisiklikKaydet=yurtDegistir.AddNewProButton(yurtDegistirPanel1, 'yurtDegisiklikKaydet', ' Güncellemeleri Kaydet');
+   clComponent.SetupComponent(yurtDegisiklikKaydet,'{
+   "MarginTop":500,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#e2c1c8"
+    }');
+    
+  yurtDegistir.AddNewEvent(yurtDegisiklikKaydet,tbeOnClick,'UpdateYurtData');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+   
+  yurtDegistir.Run;
+}

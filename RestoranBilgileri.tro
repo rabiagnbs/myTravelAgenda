@@ -1,0 +1,155 @@
+var 
+  restoranBilgileri: TclStyleForm;
+  restoranSayisi, r: Integer;
+  VerticalScrollBox: TclVertScrollBox;
+  restoranIsim, restoranYorum, restoranPuan, restoranUcret: TclProEdit;
+  restoranResim: TClProImage;
+  restoranBilgiKayit: TClProButton;
+  database, password : String;
+  
+void restoranBilgiKayitEt;
+{
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Restaurants (restaurant_isim, restaurant_puan, restaurant_ucret, restaurant_yorum) VALUES ('+QuotedStr(restoranIsim.Text)+', '+QuotedStr(restoranPuan.Text)+'
+    , '+QuotedStr(restoranUcret.Text)+', '+QuotedStr(restoranYorum.Text)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Restoran Bilgileri Başarı İle Eklenmiştir✅');
+   except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+
+{
+  restoranBilgileri=TclStyleForm.Create(Self);
+  restoranBilgileri.SetFormBGImage('https://i.hizliresim.com/cf0n6nk.png');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+  
+
+  
+  VerticalScrollBox = restoranBilgileri.AddNewVertScrollBox(restoranBilgileri,'ScrollY');
+  VerticalScrollBox.Align = alMostTop;
+  VerticalScrollBox.Height = TForm(restoranBilgileri).clientHeight;
+  
+   restoranResim= restoranBilgileri.AddNewProImage(VerticalScrollBox, 'restoranResim');
+   clComponent.SetupComponent(restoranResim,'{
+   "MarginBottom": 1200,
+   "Width" :380, 
+   "Height":285,
+   "BorderColor":"#6f86d1",
+   "BorderWidth":2,
+   "ImgUrl":"https://i.pinimg.com/originals/a0/51/35/a051351ddccced1a38c0fc35e042f69d.jpg",
+   "ImgFit":"yes"
+   }'); 
+   
+   restoranIsim=restoranBilgileri.AddNewProEdit(VerticalScrollBox, 'restoranIsim', 'Restoran İsmi');
+   clComponent.SetupComponent(restoranIsim,'{
+   "MarginBottom": 800,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#2b7380",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#bbd0d3"
+   }');
+   
+   restoranPuan=restoranBilgileri.AddNewProEdit(VerticalScrollBox, 'restoranPuan', 'Restorana 10 üzerinden puanınız nedir?');
+   clComponent.SetupComponent(restoranPuan,'{
+   "MarginBottom": 650,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#2b7380",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#bbd0d3"
+   }');
+   restoranPuan.clTypeOfField = taFloat; 
+   
+   
+   restoranUcret=restoranBilgileri.AddNewProEdit(VerticalScrollBox, 'restoranUcret', 'Restoranda ortalama yemek fiyatları nedir? ');
+   clComponent.SetupComponent(restoranUcret,'{
+   "MarginBottom": 500,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#2b7380",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#bbd0d3"
+   }');
+   
+   restoranUcret.clTypeOfField = taFloat; 
+
+
+   
+   restoranYorum=restoranBilgileri.AddNewProEdit(VerticalScrollBox, 'restoranYorum', 'Restoran hakkındaki görüşleriniz nelerdir?');
+   clComponent.SetupComponent(restoranYorum,'{
+   "MarginBottom": 250,
+   "Width" :400, 
+   "Height":150,
+   "TextColor":"#2b7380",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#bbd0d3"
+   }');
+ 
+   restoranBilgiKayit=restoranBilgileri.AddNewProButton(VerticalScrollBox, 'restoranBilgiKayit', ' Bilgileri Kaydet ');
+   clComponent.SetupComponent(restoranBilgiKayit,'{
+   "MarginBottom":100,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :400, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#8db0b5"
+    }');
+
+    restoranBilgileri.AddNewEvent(restoranBilgiKayit,tbeOnClick,'restoranBilgiKayitEt'); 
+    
+  database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3';
+  password = '';
+    
+/*try
+    Clomosy.DBSQLiteConnect(database , password);
+    
+    Clomosy.DBSQLiteQuery.Sql.Text = 'CREATE TABLE Restaurants(restaurant_id INTEGER PRIMARY KEY AUTOINCREMENT, restaurant_isim Text,  restauran_puan Integer, restaurant_ucret Integer, restaurant_yorum Text)';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanına tablo ekleme işlemi başarılı!');
+  except
+    ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }*/
+
+    
+  restoranBilgileri.Run;
+}

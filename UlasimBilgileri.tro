@@ -1,0 +1,191 @@
+var 
+  ulasimBilgileri: TclStyleForm;
+  VerticalScrollBox: TclVertScrollBox;
+  sehirlerArasiUlasimUcret, sehirIciUlasimUcret: TclProEdit;
+  sehirlerArasiUlasim, sehirIciUlasim: TclProLabel;
+  ulasimResim: TClProImage;
+  ulasimBilgiKayit: TClProButton;
+  sehirlerArasiUlasimTuru, sehirIciUlasimTuru: TCLComboBox;
+  intercityBilgiD, urbanBilgiD: String;
+    database, password: String;
+  
+   void ulasimBilgiKayitEt;
+{
+  intercityBilgiD=sehirlerArasiUlasimTuru.GetItemIndex(sehirlerArasiUlasimTuru.ItemIndex);
+  urbanBilgiD=sehirIciUlasimTuru.GetItemIndex(sehirIciUlasimTuru.ItemIndex);
+  
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Transport(intercity_transport_turu, intercity_transport_ucret, urban_transport_turu, urban_transport_ucret) VALUES ('+QuotedStr(intercityBilgiD)+', '+QuotedStr(sehirlerArasiUlasimUcret.Text)+'
+    , '+QuotedStr(urbanBilgiD)+', '+QuotedStr(sehirIciUlasimUcret.Text)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Ulaşım Bilgileri Başarı İle Eklenmiştir✅');
+   except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+
+{
+  ulasimBilgileri=TclStyleForm.Create(Self);
+  ulasimBilgileri.SetFormBGImage('https://i.hizliresim.com/cf0n6nk.png');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+  
+  
+  VerticalScrollBox = ulasimBilgileri.AddNewVertScrollBox(ulasimBilgileri,'ScrollY');
+  VerticalScrollBox.Align = alMostTop;
+  VerticalScrollBox.Height = TForm(ulasimBilgileri).clientHeight;
+  
+   ulasimResim= ulasimBilgileri.AddNewProImage(VerticalScrollBox, 'ulasimResim');
+   clComponent.SetupComponent(ulasimResim,'{
+   "MarginBottom": 1200,
+   "Width" :390, 
+   "Height":260,
+   "BorderColor":"#6f86d1",
+   "BorderWidth":2,
+   "ImgUrl":"https://i.pinimg.com/564x/ee/91/3b/ee913b7054edc15f20a8aba1c3c98979.jpg",
+   "ImgFit":"yes"
+   }'); 
+   
+   
+   sehirlerArasiUlasim=ulasimBilgileri.AddNewProLabel(ulasimBilgileri, 'sehirlerArasiUlasim', 'Şehirler Arası Ulaşım Türü Nedir?');
+   clComponent.SetupComponent(sehirlerArasiUlasim,'{
+   "MarginBottom": 1000,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#797d43",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#f6f0c3"
+   }');
+   
+  sehirlerArasiUlasimTuru = ulasimBilgileri.AddNewComboBox(VerticalScrollBox,'sehirlerArasiUlasimTuru');
+  sehirlerArasiUlasimTuru.Width=400;
+  sehirlerArasiUlasimTuru.Height=50;
+  sehirlerArasiUlasimTuru.Position.Y=70;
+  sehirlerArasiUlasimTuru.Position.X=10;
+  sehirlerArasiUlasimTuru.AddItem('Tren','01');
+  sehirlerArasiUlasimTuru.AddItem('Uçak','02');
+  sehirlerArasiUlasimTuru.AddItem('Otobüs','03');
+  sehirlerArasiUlasimTuru.AddItem('Araba','04');
+  sehirlerArasiUlasimTuru.AddItem('Otostop','05'); 
+  
+  intercityBilgiD=sehirlerArasiUlasimTuru.GetItemIndex(sehirlerArasiUlasimTuru.ItemIndex);
+  
+   
+  
+   sehirlerArasiUlasimUcret=ulasimBilgileri.AddNewProEdit(VerticalScrollBox, 'sehirlerArasiUlasimUcret', ' Şehirler arası ulaşım için ödediğiniz ücret nedir?');
+   clComponent.SetupComponent(sehirlerArasiUlasimUcret,'{
+   "MarginBottom": 580,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#797d43",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#f6f0c3"
+   }');
+   
+   sehirlerArasiUlasimUcret.clTypeOfField = taFloat; 
+
+
+   
+   sehirIciUlasim=ulasimBilgileri.AddNewProLabel(ulasimBilgileri, 'sehirIciUlasim', 'Şehir Içi Ulaşım Türü Nedir?');
+   clComponent.SetupComponent(sehirIciUlasim,'{
+   "MarginBottom": 600,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#797d43",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#f6f0c3"
+   }');
+   
+  sehirIciUlasimTuru = ulasimBilgileri.AddNewComboBox(VerticalScrollBox,'sehirIciUlasimTuru');
+  sehirIciUlasimTuru.Width=400;
+  sehirIciUlasimTuru.Height=50;
+  sehirIciUlasimTuru.Position.Y=260;
+  sehirIciUlasimTuru.Position.X=10;
+  sehirIciUlasimTuru.AddItem('Metro','01');
+  sehirIciUlasimTuru.AddItem('Tramvay','02');
+  sehirIciUlasimTuru.AddItem('Dolmuş','03');
+  sehirIciUlasimTuru.AddItem('Taksi','04');
+  sehirIciUlasimTuru.AddItem('Araba','05'); 
+  sehirIciUlasimTuru.AddItem('Bisiklet','06');
+  sehirIciUlasimTuru.AddItem('Scooter','07');
+  sehirIciUlasimTuru.AddItem('Yürüyüş','08'); 
+  
+  urbanBilgiD=sehirIciUlasimTuru.GetItemIndex(sehirIciUlasimTuru.ItemIndex);
+  
+   sehirIciUlasimUcret=ulasimBilgileri.AddNewProEdit(VerticalScrollBox, 'sehirIciUlasimUcret', ' Şehir içi ulaşım için ödediğiniz ücret nedir?');
+   clComponent.SetupComponent(sehirIciUlasimUcret,'{
+   "MarginBottom": 200,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#797d43",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#f6f0c3"
+   }');
+   
+   sehirIciUlasimUcret.clTypeOfField = taFloat; 
+ 
+   ulasimBilgiKayit=ulasimBilgileri.AddNewProButton(VerticalScrollBox, 'ulasimBilgiKayit', ' Bilgileri Kaydet ');
+   clComponent.SetupComponent(ulasimBilgiKayit,'{
+   "MarginBottom":100,
+   "MarginTop":65,
+   "TextColor":"#797d43",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :400, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#efe597"
+    }');
+    
+    ulasimBilgileri.AddNewEvent(ulasimBilgiKayit,tbeOnClick,'ulasimBilgiKayitEt');
+    
+  database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3';     
+  password = '';
+    
+    
+/*try
+    Clomosy.DBSQLiteConnect(database , password);
+    
+    Clomosy.DBSQLiteQuery.Sql.Text = 'CREATE TABLE Transport(transport_id INTEGER PRIMARY KEY AUTOINCREMENT, intercity_transport_turu Text,  intercity_transport_ucret Integer, urban_transport_turu Text, urban_transport_ucret Integer)';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanına tablo ekleme işlemi başarılı!');
+  except
+    ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }*/
+
+  ulasimBilgileri.Run;
+}

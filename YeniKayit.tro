@@ -1,0 +1,247 @@
+var
+  yeniKayit: TclStyleForm;
+  kayitOlPanel1: TclProPanel;
+  kayitOlButton: TClProButton;
+  nameKayit, surNameKayit, userNameKayit, PasswordKayit, emailKayit, Yas: TClProEdit;
+  dogumTarihi: TClProDateEdit;
+  dogumTarihiLabel: TCLProLabel;
+  gun,ay,yil, dogruTarih: TclString;
+  sayac: TclInteger;
+  AnaSayfa, YeniSeyahat: TclUnit;
+  denemeButonn: TClProButton;
+  ucakImg: TCLImage;
+  
+
+void InsertToDatabase;
+{
+  gun = clGetStringTo(dogumTarihi.Date,'.');
+  yil = clGetStringAfter(dogumTarihi.Date, '.');
+  ay = clGetStringTo(yil, '.');
+  yil = clGetStringAfter(yil, '.');
+  
+  dogruTarih = yil + '-' + ay + '-' + gun;
+  
+  if((Length(nameKayit.Text)==0) || (Length(surNameKayit.Text)==0)  || (Length(userNameKayit.Text)==0)  ||  (Length(PasswordKayit.Text)==0)) {
+      ShowMessage('Yıldızlı alanlar boş bırakılamaz. Lütfen gerekli bilgileri doldurunuz❗️');
+  }
+  
+  else{
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Users (users_name, users_surname, users_username, users_password, users_email, users_age, users_dateOfBirth) VALUES ('+QuotedStr(nameKayit.Text)+', 
+    '+QuotedStr(surNameKayit.Text)+', '+QuotedStr(userNameKayit.Text)+' , '+QuotedStr(PasswordKayit.Text)+', '+QuotedStr(emailKayit.Text)+', '+QuotedStr(Yas.Text)+', '+QuotedStr(dogruTarih)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute; 
+    ShowMessage('Başarılı bir şekilde kayıt olundu ✅');
+    CallerForm.clShow;
+  }
+}
+
+
+{
+  yeniKayit=TclStyleForm.Create(self);
+  yeniKayit.SetFormBGImage('https://i.pinimg.com/564x/8c/d9/16/8cd91636fb363780160fede3f9b7717e.jpg');
+  AnaSayfa=TclUnit.Create;
+  
+  kayitOlPanel1=yeniKayit.AddNewProPanel(yeniKayit,'kayitOlPanel1');
+  clComponent.SetupComponent(kayitOlPanel1,
+  '{"Align" : "Center",
+  "MarginBottom":100,
+  "MarginTop":100,
+  "Width" :400, 
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"#faf0f6"
+  }');
+  
+  nameKayit=yeniKayit.AddNewProEdit(kayitOlPanel1, 'nameKayit', '* İsim:');
+  clComponent.SetupComponent(nameKayit,'{
+  "Align":"Top",
+  "Width" :200, 
+  "Height":50,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":2,
+  "BackGroundColor":"null"
+  }');
+   
+  surNameKayit=yeniKayit.AddNewProEdit(kayitOlPanel1, 'surNameKayit', '* Soyİsim:');
+  clComponent.SetupComponent(surNameKayit,'{
+  "Align":"Top",
+  "Width" :200, 
+  "Height":50,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":2,
+  "BackGroundColor":"null"
+  }');
+  
+  
+  userNameKayit=yeniKayit.AddNewProEdit(kayitOlPanel1, 'userNameKayit', '* Kullanıcı Adı Belirleyiniz:');
+  clComponent.SetupComponent(userNameKayit,'{
+  "Align":"Top",
+  "Width" :200, 
+  "Height":50,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":2,
+  "BackGroundColor":"null"
+  }');
+   
+  
+  PasswordKayit=yeniKayit.AddNewProEdit(kayitOlPanel1, 'PasswordKayit', '* Şifre Belirleyiniz:');
+  clComponent.SetupComponent(PasswordKayit,'{
+  "Align":"Top",
+  "Width" :200, 
+  "Height":50,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":2,
+  "BackGroundColor":"null",
+  "Password":"False"
+  }');
+  
+  PasswordKayit.Password = True;
+  
+  emailKayit=yeniKayit.AddNewProEdit(kayitOlPanel1, 'emailKayit', 'Email Belirleyiniz:');
+  clComponent.SetupComponent(emailKayit,'{
+  "Align":"Top",
+  "Width" :200, 
+  "Height":50,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":2,
+  "BackGroundColor":"null"
+  }');
+  
+  Yas=yeniKayit.AddNewProEdit(kayitOlPanel1, 'Yas', 'Yaş Bilgisi:');
+  clComponent.SetupComponent(Yas,'{
+  "Align":"Top",
+  "Width" :200, 
+  "Height":50,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":2,
+  "BackGroundColor":"null"
+  }');
+  Yas.clTypeOfField = taFloat; 
+   
+   
+  dogumTarihiLabel=yeniKayit.AddNewProLabel(kayitOlPanel1, 'dogumTarihiLabel', 'Doğum Tarihi:');
+  clComponent.SetupComponent(dogumTarihiLabel,'{
+  "Width" :150, 
+  "Height":40,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":2,
+  "BackGroundColor":"null",
+  "MarginLeft":50,
+  "MarginRight":200
+  }');
+  
+  
+  dogumTarihi = yeniKayit.AddNewProDateEdit(kayitOlPanel1,'dogumTarihi');
+  clComponent.SetupComponent(dogumTarihi,'{
+  "Width" :150, 
+  "Height":40,
+  "RoundHeight":20,
+  "TextColor": "#133f87",
+  "RoundWidth":20,
+  "BorderColor":"#6f86d1",
+  "BorderWidth":2,
+  "BackgroundColor":"null",
+  "TextSize" : 18,
+  "TextVerticalAlign" : "Center",
+  "TextHorizontalAlign" : "Center",
+  "MarginLeft":200,
+  "MarginRight":50
+  }');
+   
+  kayitOlButton=yeniKayit.AddNewProButton(kayitOlPanel1, 'kayitOlButton', 'Kayıt Ol');
+  clComponent.SetupComponent(kayitOlButton,'{
+  "Align":"Bottom",
+  "TextColor":"#526fcc",
+  "TextWidth":400,
+  "TextHeight":200,
+  "TextSize":17,
+  "Width" :200, 
+  "Height":50,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderColor":"#617bcf",
+  "BorderWidth":2,
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+  }');
+  
+  yeniKayit.AddNewEvent(kayitOlButton,tbeOnClick,'InsertToDatabase');
+  
+
+
+  
+  gun = clGetStringTo(dogumTarihi.Date,'.');
+  yil = clGetStringAfter(dogumTarihi.Date, '.');
+  ay = clGetStringTo(yil, '.');
+  yil = clGetStringAfter(yil, '.');
+  
+  dogruTarih = yil + '-' + ay + '-' + gun;
+
+
+ /*  try
+      Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+    
+    Clomosy.DBSQLiteQuery.Sql.Text = 'Create TABLE Users(
+    users_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    users_name TEXT,
+    users_surname TEXT, users_username TEXT, users_password TEXT, users_email TEXT, users_age INTEGER, users_dateOfBirth DATE
+  );';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanı eklenmiştir.');
+  except
+   ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }
+*/
+  
+  yeniKayit.Run;
+}

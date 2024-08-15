@@ -1,0 +1,212 @@
+var
+  MyForm:TclStyleForm;
+  myseyahat: TClProLabel;
+  newseyahat, seyahatDuzenle, sehirHedef, sehirEsya, sehirGaleri: TClProButton;
+  seyahatImg, ucakImg: TClProImage;
+  yeniUlke, yeniSehir: TClProLabel;
+  yeniUlkeEdit, yeniSehirEdit: TclProEdit;
+  YeniSeyahat: TclUnit;
+  SeyahatHedef: TclUnit;
+  SeyahatGoruntule: TclUnit;
+  SeyahatEsya: TclUnit;
+  KameraResim: TclUnit;
+  
+  
+  
+void GoToYeniSeyahat;
+{
+  MyForm.clShow;
+  YeniSeyahat.UnitName='YeniSeyahat';
+  YeniSeyahat.CallerForm=MyForm;
+  YeniSeyahat.Run;
+}
+
+
+void GoToSeyahatHedef;
+{
+  MyForm.clShow;
+  SeyahatHedef.UnitName='SeyahatHedef';
+  SeyahatHedef.CallerForm=MyForm;
+  SeyahatHedef.Run;
+}
+
+
+void GoToSeyahatGoruntule;
+{
+  MyForm.clShow;
+  SeyahatGoruntule.UnitName='SeyahatGoruntule';
+  SeyahatGoruntule.CallerForm=MyForm;
+  SeyahatGoruntule.Run;
+}
+
+
+void GoToSeyahatEsya;
+{
+  MyForm.clShow;
+  SeyahatEsya.UnitName='SeyahatEsya';
+  SeyahatEsya.CallerForm=MyForm;
+  SeyahatEsya.Run;
+}
+
+
+void GoToKameraResim;
+{
+  MyForm.clShow;
+  KameraResim.UnitName='KameraResim';
+  KameraResim.CallerForm=MyForm;
+  KameraResim.Run;
+}
+
+
+{
+  MyForm=TclStyleForm.Create(self);
+  MyForm.SetFormColor('#ed91a5','#f5babb', clGHorizontal);
+  YeniSeyahat=TclUnit.Create;
+  SeyahatHedef=TclUnit.Create;
+  SeyahatGoruntule=TclUnit.Create;
+  SeyahatEsya=TclUnit.Create;
+  KameraResim=TclUnit.Create;
+  
+  
+  myseyahat=MyForm.AddNewProLabel(MyForm, 'myseyahat', 'Benim Seyahat Ajandam ✈️ ');
+   clComponent.SetupComponent(myseyahat,'{
+   "Align" : "Center",
+   "MarginBottom":420,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#133f87",
+   "TextSize":25,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#617bcf",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+   
+   newseyahat=MyForm.AddNewProButton(MyForm, 'newseyahat', 'Yeni Seyahat Ekle 🗺️️');
+   clComponent.SetupComponent(newseyahat,'{
+   "TextColor":"#526fcc",
+   "TextWidth":350,
+   "TextHeight":250,
+   "MarginBottom":250,
+   "TextSize":15,
+   "MarginLeft":5,
+   "MarginRight":100,
+   "Width" :250, 
+   "Height":70,
+   "RoundHeight":2,
+   "RoundWidth":2,
+   "BorderColor":"#617bcf",
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"null"
+   }');
+   
+   MyForm.AddNewEvent(newseyahat,tbeOnClick,'GoToYeniSeyahat');
+   
+   
+   seyahatDuzenle=MyForm.AddNewProButton(MyForm, 'seyahatDuzenle', 'Seyahat Bilgilerini ' + #13#10 +' Düzenle 🌉️️️');
+   clComponent.SetupComponent(seyahatDuzenle,'{
+   "TextColor":"#526fcc",
+   "TextWidth":400,
+   "TextHeight":200,
+   "MarginBottom":80,
+   "TextSize":15,
+   "MarginLeft":100,
+   "MarginRight":5,
+   "Width" :250, 
+   "Height":70,
+   "RoundHeight":2,
+   "RoundWidth":2,
+   "BorderColor":"#617bcf",
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"null"
+   }');
+   MyForm.AddNewEvent(seyahatDuzenle, tbeOnClick, 'GoToSeyahatGoruntule');
+   
+   
+   sehirHedef=MyForm.AddNewProButton(MyForm, 'sehirHedef', 'Seyahat Hedefi 🎯️️️');
+   clComponent.SetupComponent(sehirHedef,'{
+   "TextColor":"#526fcc",
+   "TextWidth":400,
+   "TextHeight":200,
+   "MarginBottom":140,
+   "TextSize":15,
+   "MarginTop":230,
+   "MarginLeft":5,
+   "MarginRight":100,
+   "Width" :250, 
+   "Height":70,
+   "RoundHeight":2,
+   "RoundWidth":2,
+   "BorderColor":"#617bcf",
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"null"
+   }');
+   MyForm.AddNewEvent(sehirHedef,tbeOnClick,'GoToSeyahatHedef');
+   
+   sehirEsya=MyForm.AddNewProButton(MyForm, 'sehirEsya', 'Seyahat Esnasında'  + #13#10 + 'Alınacaklar 🗓️');
+   clComponent.SetupComponent(sehirEsya,'{
+   "TextColor":"#526fcc",
+   "TextWidth":400,
+   "TextHeight":200,
+   "MarginBottom":140,
+   "TextSize":15,
+   "MarginTop": 400,
+   "MarginLeft":100,
+   "MarginRight":5,
+   "Width" :250, 
+   "Height":70,
+   "RoundHeight":2,
+   "RoundWidth":2,
+   "BorderColor":"#617bcf",
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"null"
+   }');
+    MyForm.AddNewEvent(sehirEsya,tbeOnClick,'GoToSeyahatEsya');
+   
+   
+   sehirGaleri=MyForm.AddNewProButton(MyForm, 'sehirGaleri', 'Seyahat R️esim Ekle 🎞️');
+   clComponent.SetupComponent(sehirGaleri,'{
+   "TextColor":"#526fcc",
+   "TextWidth":400,
+   "TextHeight":200,
+   "MarginBottom":140,
+   "TextSize":15,
+   "MarginTop": 570,
+   "MarginLeft":5,
+   "MarginRight":100,
+   "Width" :250, 
+   "Height":70,
+   "RoundHeight":2,
+   "RoundWidth":2,
+   "BorderColor":"#617bcf",
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"null"
+   }');
+    MyForm.AddNewEvent(sehirGaleri,tbeOnClick,'GoToKameraResim');
+   
+   
+   seyahatImg= MyForm.AddNewProImage(MyForm, 'seyahatImg');
+   clComponent.SetupComponent(seyahatImg,'{
+   "Align" : "Top",
+   "MarginTop":20,
+   "Width" :80, 
+   "Height":220,
+   "BorderColor":"#6f86d1",
+   "BorderWidth":2,
+   "ImgUrl":"https://www.datocms-assets.com/64859/1652213403-seyahat-blogu-yazari.jpeg",
+   "ImgFit":"yes"
+   }');
+   
+
+   
+  MyForm.Run;
+}

@@ -1,0 +1,512 @@
+Var
+   seyahatEsya: TclStyleForm;
+   goturulecekEsya, alinacakEsya: TclProButton;
+   esya1, esya2, esya3, esya4, esya5, esya6, esya7, esya8, esya9, esya10, esya11, esya12: TCLCheckBox;
+   esya13, esya14, esya15, esya16, esya17, esya18, esya19, esya20, esya21, esya22, esya23: TCLCheckBox;
+   VerticalScrollBox3 : TclVertScrollBox;
+   seyahatEsyaPanel1: TclProPanel;
+   hedefUlkeIsim, hedefUlkeIsim1: TCLComboBox;
+   Qry2: TClSQLiteQuery;
+   m: Integer;
+   goturulecekEsyaButton: TclProButton;
+   hedefUlke, gtesya: TClProLabel;
+   ulkeIsim: String;
+   database, password : String;
+  
+     
+void esyaBilgiKayitEt;
+{
+  ulkeIsim=hedefUlkeIsim.GetItemIndex(hedefUlkeIsim.ItemIndex);
+  
+  if(esya1.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya1.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya2.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya2.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya3.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya3.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+ 
+  if(esya4.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya4.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya5.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya5.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya6.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya6.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya7.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya7.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  
+  if(esya8.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya8.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya9.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya9.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya10.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya10.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya11.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya11.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  if(esya12.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya12.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya13.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya13.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya14.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya14.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya15.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya15.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya16.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya16.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya17.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya17.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya18.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya18.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  if(esya19.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya19.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+    if(esya20.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya20.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+    if(esya21.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya21.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+    if(esya22.isChecked){
+     try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Items(item_name, goals_country) VALUES ('+QuotedStr(esya22.Text)+',  '+QuotedStr(ulkeIsim)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  }
+  
+  ShowMessage('Eşya Bilgileri Başarı İle Kaydedilmiştir.✅');
+ 
+}
+   
+   
+{
+  seyahatEsya=TclStyleForm.Create(self);
+  seyahatEsya.SetFormBGImage('https://i.pinimg.com/originals/6c/32/83/6c328355b27a7ad503c13035359c7fc6.jpg');
+  
+  
+  seyahatEsya=TclStyleForm.Create(self);
+  seyahatEsya.SetFormBGImage('https://i.pinimg.com/originals/6c/32/83/6c328355b27a7ad503c13035359c7fc6.jpg');
+  
+  
+  seyahatEsyaPanel1=seyahatEsya.AddNewProPanel(seyahatEsya, 'seyahatEsyaPanel1');
+  clComponent.SetupComponent(seyahatEsyaPanel1,
+  '{
+  "MarginBottom":200,
+  "MarginTop":50,
+  "MarginLeft":5,
+  "MarginRight":200,
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+   gtesya = seyahatEsya.AddNewProLabel(seyahatEsya,'gtesya','Yanınıza Alacağınız Eşyalar:');
+   clComponent.SetupComponent(gtesya,'{
+   "MarginBottom":750,
+   "MarginTop":50,
+   "Width" :300, 
+   "Height":20,
+   "TextColor":"#506cb5",
+   "TextSize":17,
+   "MarginLeft":200,
+   "MarginRight":260,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"left",
+   "TextBold":"yes"}');
+  
+  VerticalScrollBox3 = seyahatEsya.AddNewVertScrollBox(seyahatEsyaPanel1,'ScrollY');
+  VerticalScrollBox3.Align=alClient;
+  
+   esya1 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya1','Passaport - Kimlik Kartı - Ehliyet');
+   esya1.TextSettings.Font.Size=30;
+   esya1.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya1.Position.X=30;
+   esya1.Position.Y=0;
+   esya1.Height = 40;
+   esya1.Width=300;
+   
+   esya2 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya2','PowerBank');
+   esya2.TextSettings.Font.Size=30;
+   esya2.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya2.Position.X=30;
+   esya2.Position.Y=40;
+   esya2.Height = 40; 
+   esya2.Width=300;
+   
+   esya3 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya3','Şarj Aleti');
+   esya3.TextSettings.Font.Size=30;
+   esya3.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya3.Position.X=30;
+   esya3.Position.Y=80;
+   esya3.Height = 40; 
+   esya3.Width=300;
+   
+   esya4 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya4','Kulaklık');
+   esya4.TextSettings.Font.Size=30;
+   esya4.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya4.Position.X=30;
+   esya4.Position.Y=120;
+   esya4.Height = 40; 
+   esya4.Width=300;
+  
+   esya5 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya5','Priz Dönüştürücü');
+   esya5.TextSettings.Font.Size=30;
+   esya5.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya5.Position.X=30;
+   esya5.Position.Y=160;
+   esya5.Height = 40; 
+   esya5.Width=300;
+
+   esya6 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya6','Fotoğraf Makinesi');
+   esya6.TextSettings.Font.Size=30;
+   esya6.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya6.Position.X=30;
+   esya6.Position.Y=200;
+   esya6.Height = 40; 
+   esya6.Width=300;
+   
+   
+   esya7 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya7','Ağrı Kesici - Mide İlacı');
+   esya7.TextSettings.Font.Size=30;
+   esya7.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya7.Position.X=30;
+   esya7.Position.Y=240;
+   esya7.Height = 40; 
+   esya7.Width=300;
+
+
+   esya8 =seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya8','Düzenli Kulllanılan İlaç');
+   esya8.TextSettings.Font.Size=30;
+   esya8.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya8.Position.X=30;
+   esya8.Position.Y=280;
+   esya8.Height = 40; 
+   esya8.Width=300;
+   
+   esya9 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya9','Kirli Poşeti');
+   esya9.TextSettings.Font.Size=30;
+   esya9.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya9.Position.X=30;
+   esya9.Position.Y=320;
+   esya9.Height = 40; 
+   esya9.Width=300;
+  
+   
+   esya10 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya10','Şemsiye');
+   esya10.TextSettings.Font.Size=30;
+   esya10.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya10.Position.X=30;
+   esya10.Position.Y=360;
+   esya10.Height = 40; 
+   esya10.Width=300;
+   
+   esya11 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya11','Bel Çantası');
+   esya11.TextSettings.Font.Size=30;
+   esya11.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya11.Position.X=30;
+   esya11.Position.Y=400;
+   esya11.Height = 40; 
+   esya11.Width=300;
+   
+   esya12 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya12','Seyahat Rehberi');
+   esya12.TextSettings.Font.Size=30;
+   esya12.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya12.Position.X=30;
+   esya12.Position.Y=440;
+   esya12.Height = 40; 
+   esya12.Width=300;
+   
+   esya13 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya13','Ev Anahtarı');
+   esya13.TextSettings.Font.Size=30;
+   esya13.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya13.Position.X=30;
+   esya13.Position.Y=480;
+   esya13.Height = 40; 
+   esya13.Width=300;
+   
+   esya14 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya14','Diş Fırçası - Macunu');
+   esya14.TextSettings.Font.Size=30;
+   esya14.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya14.Position.X=30;
+   esya14.Position.Y=520;
+   esya14.Height = 40; 
+   esya14.Width=300;
+   
+   esya15 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya15','Güneş Kremi');
+   esya15.TextSettings.Font.Size=30;
+   esya15.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya15.Position.X=30;
+   esya15.Position.Y=560;
+   esya15.Height = 40; 
+   esya15.Width=300;
+   
+   esya16 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya16','Makyaj Malzemeleri');
+   esya16.TextSettings.Font.Size=30;
+   esya16.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya16.Position.X=30;
+   esya16.Position.Y=600;
+   esya16.Height = 40; 
+   esya16.Width=300;
+  
+   esya17 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya17','Duş Jeli - Şampuan - Lif');
+   esya17.TextSettings.Font.Size=30;
+   esya17.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya17.Position.X=30;
+   esya17.Position.Y=640;
+   esya17.Height = 40; 
+   esya17.Width=300;
+   
+   esya18 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya18','Ayakkabı-Terlik');
+   esya18.TextSettings.Font.Size=30;
+   esya18.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya18.Position.X=30;
+   esya18.Position.Y=680;
+   esya18.Height = 40; 
+   esya18.Width=300;
+   
+   
+   esya19 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya19','Plaj Çantası');
+   esya19.TextSettings.Font.Size=30;
+   esya19.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya19.Position.X=30;
+   esya19.Position.Y=720;
+   esya19.Height = 40; 
+   esya19.Width=300;
+   
+   esya20 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya20','Yara Bandı');
+   esya20.TextSettings.Font.Size=30;
+   esya20.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya20.Position.X=30;
+   esya20.Position.Y=760;
+   esya20.Height = 40; 
+   esya20.Width=300;
+   
+   esya21 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya21','Uçak- Otobüs Bileti');
+   esya21.TextSettings.Font.Size=30;
+   esya21.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya21.Position.X=30;
+   esya21.Position.Y=800;
+   esya21.Height = 40; 
+   esya21.Width=300;
+   
+   esya22 = seyahatEsya.AddNewCheckBox(VerticalScrollBox3,'esya22','Atıştırmalık');
+   esya22.TextSettings.Font.Size=30;
+   esya22.TextSettings.FontColor = clAlphaColor.clHexToColor('#272643');
+   esya22.Position.X=30;
+   esya22.Position.Y=840;
+   esya22.Height = 40; 
+   esya22.Width=300;
+   
+   hedefUlke = seyahatEsya.AddNewProLabel(seyahatEsya,'hedefUlke','Gideceğiniz Ülke:');
+   clComponent.SetupComponent(hedefUlke,'{
+   "MarginBottom":10,
+   "MarginTop":500,
+   "Width" :150, 
+   "Height":20,
+   "TextColor":"#506cb5",
+   "TextSize":17,
+   "MarginLeft":55,
+   "MarginRight":215,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"left",
+   "TextBold":"yes"}');
+   
+   hedefUlkeIsim = seyahatEsya.AddNewComboBox(seyahatEsya,'hedefUlkeIsim');
+   hedefUlkeIsim.Width = 150;
+   hedefUlkeIsim.Position.Y=720;
+   hedefUlkeIsim.Position.X=50;
+
+   
+   try
+    Qry2 = Clomosy.DBSQLiteQueryWith('SELECT goal_country FROM Goals');
+    Qry2.OpenOrExecute;
+    
+    while(not (Qry2.Eof))
+   {
+  	hedefUlkeIsim.AddItem(Qry2.FieldByName('goal_country').AsString,Qry2.FieldByName('goal_country').AsString);
+  	Qry2.Next;
+   }
+ 
+    except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+  
+   goturulecekEsyaButton=seyahatEsya.AddNewProButton(seyahatEsya, 'goturulecekEsyaButton', ' Bilgileri Kaydet');
+   clComponent.SetupComponent(goturulecekEsyaButton,'{
+   "MarginTop":650,
+   "TextColor":"#fef8fd",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width":140, 
+   "Height":30,
+   "MarginRight":170,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":1,
+   "TextBold":"yes",
+   "BackGroundColor":"#6c8bcc",
+   "BorderColor": "#fbfaf5"
+    }');
+    seyahatEsya.AddNewEvent(goturulecekEsyaButton,tbeOnClick,'esyaBilgiKayitEt');
+    
+ database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3';    
+  password = '';
+    
+/* try
+    Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+    Clomosy.DBSQLiteQuery.Sql.Text = 'Create Table Items( item_id INT AUTO_INCREMENT, item_name TEXT, goals_country TEXT)';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanı oluşturulmuştur!');
+  except
+   ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }
+    */
+  
+  
+  seyahatEsya.Run;
+}

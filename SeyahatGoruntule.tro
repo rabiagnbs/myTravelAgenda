@@ -1,0 +1,354 @@
+var
+  seyahatGoruntule: TclStyleForm;
+  muzeGoruntule, restoranGoruntule, yurtGoruntule, ulasimGoruntule: TClProButton;
+  muzeDegistirButton, restoranDegistirButton, yurtDegistirButton, ulasimDegistirButton: TClProButton;
+  seyahatGoruntulePanel1, seyahatGoruntulePanel2: TclProPanel;
+  VerticalScrollBox2 : TclVertScrollBox;
+  seyahatGoruntuleLabel: TClProLabel;
+  isimAra: TclProEdit;
+  Qry1 : TClSQLiteQuery;
+  m: Integer;
+  MuzeDegistir, RestoranDegistir, YurtDegistir, UlasimDegistir: TclUnit;
+  
+void GoToMuzeDegistir;
+ {
+ 
+  SeyahatGoruntule.clShow;
+  MuzeDegistir.UnitName='MuzeDegistir';
+  MuzeDegistir.CallerForm=SeyahatGoruntule;
+  MuzeDegistir.Run;
+  
+ }
+ 
+ void GoToRestoranDegistir;
+ {
+ 
+  SeyahatGoruntule.clShow;
+  RestoranDegistir.UnitName='RestoranDegistir';
+  RestoranDegistir.CallerForm=SeyahatGoruntule;
+  RestoranDegistir.Run;
+  
+ }
+ 
+  void GoToYurtDegistir;
+ {
+ 
+  SeyahatGoruntule.clShow;
+  YurtDegistir.UnitName='YurtDegistir';
+  YurtDegistir.CallerForm=SeyahatGoruntule;
+  YurtDegistir.Run;
+  
+ }
+
+  void GoToUlasimDegistir;
+ {
+ 
+  SeyahatGoruntule.clShow;
+  UlasimDegistir.UnitName='UlasimDegistir';
+  UlasimDegistir.CallerForm=SeyahatGoruntule;
+  UlasimDegistir.Run;
+  
+ }
+  
+  
+void ShowMuze;
+{
+  try
+    Qry1 = Clomosy.DBSQLiteQueryWith('SELECT muze_id, muze_isim, muze_turu, muze_ucret, muze_yorum FROM Museums WHERE muze_isim = '+ QuotedStr(isimAra.Text));
+ 
+ for m = 0 to Qry1.RecordCount-1   
+ {
+
+   seyahatGoruntuleLabel.Text=
+   ' Müze İsim: ' + Qry1.FieldByName('muze_isim').AsString + #13#10 +
+   ' Müze Türü : '+ Qry1.FieldByName('muze_turu').AsString + #13#10 +
+   ' Müze Ücret: '+ Qry1.FieldByName('muze_ucret').AsString + #13#10 +
+   ' Müze Yorum: ' +Qry1.FieldByName('muze_yorum').AsString;
+   
+ }
+ 
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+
+void ShowRestoran;
+{
+  try
+    Qry1 = Clomosy.DBSQLiteQueryWith('SELECT restaurant_id, restaurant_isim, restaurant_puan, restaurant_ucret, restaurant_yorum FROM Restaurants WHERE restaurant_isim = '+ QuotedStr(isimAra.Text));
+ 
+ for m = 0 to Qry1.RecordCount-1   
+ {
+
+   seyahatGoruntuleLabel.Text=
+   ' Restoran İsim: ' + Qry1.FieldByName('restaurant_isim').AsString + #13#10 +
+   ' Restoran Puan: '+ Qry1.FieldByName('restaurant_puan').AsString + #13#10 +
+   ' Restoran Ortalama Ücret: '+ Qry1.FieldByName('restaurant_ucret').AsString + #13#10 +
+   ' Restoran Yorum: ' +Qry1.FieldByName('restaurant_yorum').AsString;
+   
+ }
+ 
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+}
+  
+
+void ShowYurt;
+{
+  try
+    Qry1 = Clomosy.DBSQLiteQueryWith('SELECT accomodation_id, accomodation_turu, accomodation_isim, accomodation_ucret, accomodation_puan, accomodation_yorum FROM Accomodations WHERE accomodation_isim = '+ QuotedStr(isimAra.Text));
+ 
+ for m = 0 to Qry1.RecordCount-1   
+ {
+
+   seyahatGoruntuleLabel.Text=
+   ' Konaklama Türü: ' + Qry1.FieldByName('accomodation_turu').AsString + #13#10 +
+   ' Konaklama İsim: '+ Qry1.FieldByName('accomodation_isim').AsString + #13#10 +
+   ' Konaklama Ücret: '+ Qry1.FieldByName('accomodation_ucret').AsString + #13#10 +
+   ' Konaklama Puan: '+ Qry1.FieldByName('accomodation_puan').AsString + #13#10 +
+   ' Konaklama Yorum: ' +Qry1.FieldByName('accomodation_yorum').AsString;
+   
+ }
+ 
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+}
+
+
+void ShowUlasim;
+{
+
+  
+    Qry1 = Clomosy.DBSQLiteQueryWith('SELECT transport_id, intercity_transport_turu, intercity_transport_ucret, urban_transport_turu, urban_transport_ucret FROM Transport WHERE intercity_transport_turu = '+ QuotedStr(isimAra.Text)+ 'or urban_transport_turu= '+ QuotedStr(isimAra.Text));
+ 
+ for m = 0 to Qry1.RecordCount-1   
+ {
+ 
+   seyahatGoruntuleLabel.Text=
+   ' Şehirler Arası Ulaşım Türü: ' + Qry1.FieldByName('intercity_transport_turu').AsString + #13#10 +
+   ' Şehirler Arası Ulaşım Ücret : '+ Qry1.FieldByName('intercity_transport_ucret').AsString + #13#10 +
+   ' Şehir İçi Ulaşım Türü: '+ Qry1.FieldByName('urban_transport_turu').AsString + #13#10 +
+   ' Şehir İçi Ulaşım Ücret: ' +Qry1.FieldByName('urban_transport_ucret').AsString; 
+   
+ 
+
+  }
+  
+ } 
+  
+  
+{
+  seyahatGoruntule=TclStyleForm.Create(self);
+  seyahatGoruntule.SetFormBGImage('https://i.pinimg.com/originals/8e/b7/c4/8eb7c44488ef0ee959748a086edec636.jpg');
+  MuzeDegistir=TclUnit.Create;
+  RestoranDegistir=TclUnit.Create;
+  YurtDegistir=TclUnit.Create;
+  UlasimDegistir=TclUnit.Create;
+  
+  
+  
+  seyahatGoruntulePanel1=seyahatGoruntule.AddNewProPanel(seyahatGoruntule,'seyahatGoruntulePanel1');
+  clComponent.SetupComponent(seyahatGoruntulePanel1,
+  '{
+  "MarginBottom":1000,
+  "MarginTop":100,
+  "Width" :300, 
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+
+   muzeGoruntule=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel1, 'muzeGoruntule', ' Müze Bilgileri Görüntüle');
+   clComponent.SetupComponent(muzeGoruntule,'{
+   "MarginTop":100,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#776368"
+    }');
+  
+  seyahatGoruntule.AddNewEvent(muzeGoruntule,tbeOnClick,'ShowMuze');
+  
+   restoranGoruntule=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel1, 'restoranGoruntule', ' Restoran Bilgileri Görüntüle');
+   clComponent.SetupComponent(restoranGoruntule,'{
+   "MarginTop":220,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#a2868d"
+    }');
+    
+  seyahatGoruntule.AddNewEvent(restoranGoruntule,tbeOnClick,'ShowRestoran');
+    
+   yurtGoruntule=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel1, 'yurtGoruntule', 'Konaklama Bilgileri Görüntüle');
+   clComponent.SetupComponent(yurtGoruntule,'{
+   "MarginTop":340,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#d0abb4"
+    }');
+    
+   seyahatGoruntule.AddNewEvent(yurtGoruntule,tbeOnClick,'ShowYurt');
+    
+   ulasimGoruntule=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel1, 'ulasimGoruntule', 'Ulaşım Bilgileri Görüntüle');
+   clComponent.SetupComponent(ulasimGoruntule,'{
+   "MarginTop":460,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#e2c1c8"
+    }');
+    
+   seyahatGoruntule.AddNewEvent(ulasimGoruntule,tbeOnClick,'ShowUlasim');
+    
+  isimAra=seyahatGoruntule.AddNewProEdit(seyahatGoruntule, 'isimAra', 'Görüntülemek istediğiniz yapının ismini giriniz:');
+   clComponent.SetupComponent(isimAra,'{
+  "MarginBottom":330,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  seyahatGoruntuleLabel=seyahatGoruntule.AddNewProLabel(seyahatGoruntule,'seyahatfGoruntuleLabel','');
+  clComponent.SetupComponent(seyahatGoruntuleLabel,'{
+  "MarginBottom":10,
+  "Width": 600,
+  "Height": 200,
+  "TextColor":"#515151",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+   
+  seyahatGoruntulePanel2=seyahatGoruntule.AddNewProPanel(seyahatGoruntule,'seyahatGoruntulePanel2');
+  clComponent.SetupComponent(seyahatGoruntulePanel2,
+  '{
+  "Align":"alMostBottom",
+  "Width" :400, 
+  "Height":300,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+   muzeDegistirButton=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel2, 'muzeDegistirButton', 'Müze Bilgilerini Güncelle');
+   clComponent.SetupComponent(muzeDegistirButton,'{
+   "MarginTop":330,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#466dbf"
+    }');
+    
+   seyahatGoruntule.AddNewEvent(muzeDegistirButton,tbeOnClick,'GoToMuzeDegistir');
+   
+    
+   restoranDegistirButton=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel2, 'restoranDegistirButton', 'Restoran Bilgilerini Güncelle');
+   clComponent.SetupComponent(restoranDegistirButton,'{
+   "MarginTop":450,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#6c8bcc"
+    }');
+    
+    seyahatGoruntule.AddNewEvent(restoranDegistirButton,tbeOnClick,'GoToRestoranDegistir');
+    
+   yurtDegistirButton=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel2, 'yurtDegistirButton', 'Konaklama Bilgilerini Güncelle');
+   clComponent.SetupComponent(yurtDegistirButton,'{
+   "MarginTop":570,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#92a9d9"
+    }');
+     seyahatGoruntule.AddNewEvent(yurtDegistirButton,tbeOnClick,'GoToYurtDegistir');
+    
+   ulasimDegistirButton=seyahatGoruntule.AddNewProButton(seyahatGoruntulePanel2, 'ulasimDegistirButton', 'Ulaşım Bilgilerini Güncelle');
+   clComponent.SetupComponent(ulasimDegistirButton,'{
+   "MarginTop":700,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#b8c7e6"
+    }');
+    
+    seyahatGoruntule.AddNewEvent(ulasimDegistirButton,tbeOnClick,'GoToUlasimDegistir');
+  
+  
+  seyahatGoruntule.Run;
+}

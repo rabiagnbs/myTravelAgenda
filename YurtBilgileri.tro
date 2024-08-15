@@ -1,0 +1,172 @@
+var 
+  yurtBilgileri: TclStyleForm;
+  VerticalScrollBox: TclVertScrollBox;
+  yurtIsim, yurtYorum, yurtUcret, yurtPuan: TclProEdit;
+  yurtResim: TClProImage;
+  yurtBilgiKayit: TClProButton;
+  yurtTuru: TCLComboBox;
+  yurtTuruBilgi: String;
+  database, password: String;
+  
+ void yurtBilgiKayitEt;
+{
+yurtTuruBilgi=yurtTuru.GetItemIndex(yurtTuru.ItemIndex);
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Accomodations(accomodation_turu, accomodation_isim, accomodation_ucret, accomodation_puan, accomodation_yorum) VALUES ('+QuotedStr(yurtTuruBilgi)+', '+QuotedStr(yurtIsim.Text)+'
+    , '+QuotedStr(yurtUcret.Text)+', '+QuotedStr(yurtPuan.Text)+', '+QuotedStr(yurtYorum.Text)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Konaklama Bilgileri Başarı İle Eklenmiştir✅');
+   except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+} 
+
+  
+{
+  yurtBilgileri=TclStyleForm.Create(Self);
+  yurtBilgileri.SetFormBGImage('https://i.hizliresim.com/cf0n6nk.png');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+  
+  
+  VerticalScrollBox = yurtBilgileri.AddNewVertScrollBox(yurtBilgileri,'ScrollY');
+  VerticalScrollBox.Align = alMostTop;
+  VerticalScrollBox.Height = TForm(yurtBilgileri).clientHeight;
+  
+   yurtResim= yurtBilgileri.AddNewProImage(VerticalScrollBox, 'yurtResim');
+   clComponent.SetupComponent(yurtResim,'{
+   "MarginBottom": 1200,
+   "Width" :390, 
+   "Height":260,
+   "BorderColor":"#6f86d1",
+   "BorderWidth":2,
+   "ImgUrl":"https://i.pinimg.com/originals/23/d8/34/23d834c08d947b5ba61b9d40be13b006.jpg",
+   "ImgFit":"yes"
+   }'); 
+   
+  yurtTuru = yurtBilgileri.AddNewComboBox(VerticalScrollBox,'yurtTuru');
+  yurtTuru.Width=400;
+  yurtTuru.Height=50;
+  yurtTuru.Position.Y=1;
+  yurtTuru.Position.X=10;
+  yurtTuru.AddItem('Otel','01');
+  yurtTuru.AddItem('Hostel','02');
+  yurtTuru.AddItem('Yurt','03');
+  yurtTuru.AddItem('Çadır','04');
+  yurtTuru.AddItem('Pansiyon','05');
+  
+  yurtTuruBilgi=yurtTuru.GetItemIndex(yurtTuru.ItemIndex);
+  
+   
+   yurtIsim=yurtBilgileri.AddNewProEdit(VerticalScrollBox, 'yurtIsim', 'Kaldığınız Yerin İsmi');
+   clComponent.SetupComponent(yurtIsim,'{
+   "MarginBottom": 720,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#63120e",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#fdb9ae"
+   }');
+   
+  
+   yurtUcret=yurtBilgileri.AddNewProEdit(VerticalScrollBox, 'yurtUcret', 'Kaldığınız yere ödediğiniz günlük ücret nedir?');
+   clComponent.SetupComponent(yurtUcret,'{
+   "MarginBottom": 600,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#63120e",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#fdb9ae"
+   }');
+   
+   yurtUcret.clTypeOfField = taFloat; 
+
+
+
+  yurtPuan=yurtBilgileri.AddNewProEdit(VerticalScrollBox, 'yurtPuan', 'Kaldığınız 10 üzerinden yere puanınız nedir?');
+   clComponent.SetupComponent(yurtPuan,'{
+   "MarginBottom":480,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#63120e",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#fdb9ae"
+   }');
+   
+   yurtPuan.clTypeOfField = taFloat; 
+
+
+   
+   yurtYorum=yurtBilgileri.AddNewProEdit(VerticalScrollBox, 'yurtYorum', 'Kaldığınız yer hakkındaki görüşleriniz nelerdir?');
+   clComponent.SetupComponent(yurtYorum,'{
+   "MarginBottom": 250,
+   "Width" :400, 
+   "Height":150,
+   "TextColor":"#63120e",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#e6b3d6",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"#fdb9ae"
+   }');
+ 
+   yurtBilgiKayit=yurtBilgileri.AddNewProButton(VerticalScrollBox, 'yurtBilgiKayit', ' Bilgileri Kaydet ');
+   clComponent.SetupComponent(yurtBilgiKayit,'{
+   "MarginBottom":100,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :400, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#fc8e7c"
+    }');
+    
+    yurtBilgileri.AddNewEvent(yurtBilgiKayit,tbeOnClick,'yurtBilgiKayitEt');
+  database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3';     
+  password = '';
+    
+  /*try
+    Clomosy.DBSQLiteConnect(database , password);
+    
+    Clomosy.DBSQLiteQuery.Sql.Text = 'CREATE TABLE Accomodations(accomodation_id INTEGER PRIMARY KEY AUTOINCREMENT, accomodation_turu Text,  accomodation_isim Text, accomodation_ucret Integer, accomodation_puan Integer, accomodation_yorum Text)';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanına tablo ekleme işlemi başarılı!');
+  except
+    ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }*/
+    
+     
+  yurtBilgileri.Run;
+}

@@ -1,0 +1,178 @@
+Var 
+ restoranDegistir: TclStyleForm;
+ restoranIsimDegistir, restoranPuanDegistir, restoranUcretDegistir,restoranYorumDegistir: TclProEdit; 
+ restoranDegistirLabel1, restoranDegistirLabel2: TclProLabel;
+ restoranDegistirPanel1: TclProPanel;
+ restoranDegisiklikKaydet: TclProButton;
+ restoranItem: TCLComboBox;
+ yeniRestoranIsim: String;
+ Qry5: TClSQLiteQuery;
+ 
+ 
+ void UpdateRestoranData;
+{
+ yeniRestoranIsim=restoranItem.GetItemIndex(restoranItem.ItemIndex);
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'UPDATE Restaurants SET restaurant_puan = ' +QuotedStr(restoranPuanDegistir.Text)+  'AND restaurant_ucret=' +QuotedStr(restoranUcretDegistir.Text)+ 
+    'AND restaurant_yorum=' +QuotedStr(restoranYorumDegistir.Text)+' WHERE restaurant_isim = ' +QuotedStr(yeniRestoranIsim);
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Restoran Bilgileri güncelleme başarılı!');
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+
+ 
+{
+  restoranDegistir=TclStyleForm.Create(Self);
+  restoranDegistir.SetFormBGImage('https://i.pinimg.com/originals/8e/b7/c4/8eb7c44488ef0ee959748a086edec636.jpg');
+  
+  restoranDegistirPanel1=restoranDegistir.AddNewProPanel(restoranDegistir,'restoranDegistirPanel1');
+  clComponent.SetupComponent(restoranDegistirPanel1,'{
+  "Align": "alCenter",
+  "Width" :500, 
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+  restoranDegistirLabel1=restoranDegistir.AddNewProLabel(restoranDegistirPanel1,'restoranDegistirLabel1','Bilgilerini Değiştirmek istediğiniz' + #13#10 +'restoranın ismini giriniz:');
+  clComponent.SetupComponent(restoranDegistirLabel1,'{
+  "MarginBottom": 700,
+  "Width": 300,
+  "Height": 100,
+  "TextColor":"#8e1414",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+   
+   restoranItem = restoranDegistir.AddNewComboBox(restoranDegistir,'restoranItem');
+   restoranItem.Width = 150;
+   restoranItem.Position.Y=160;
+   restoranItem.Position.X=130;
+
+   
+   try
+    Qry5 = Clomosy.DBSQLiteQueryWith('SELECT restaurant_isim FROM Restaurants');
+    Qry5.OpenOrExecute;
+    
+    while(not (Qry5.Eof))
+   {
+  	restoranItem.AddItem(Qry5.FieldByName('restaurant_isim').AsString,Qry5.FieldByName('restaurant_isim').AsString);
+  	Qry5.Next;
+   }
+ 
+    except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+  /*restoranIsimDegistir=restoranDegistir.AddNewProEdit(restoranDegistirPanel1, 'restoranIsimDegistir', 'Restoran İsim:');
+  clComponent.SetupComponent(restoranIsimDegistir,'{
+  "MarginBottom": 550,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');*/
+  
+  restoranDegistirLabel2=restoranDegistir.AddNewProLabel(restoranDegistirPanel1,'restoranDegistirLabel2',' Bilgileri Güncelleyiniz ✍️ ');
+  clComponent.SetupComponent(restoranDegistirLabel2,'{
+  "MarginBottom": 450,
+  "Width": 600,
+  "Height": 100,
+  "TextColor":"#8e1414",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+   }');
+  
+  restoranPuanDegistir=restoranDegistir.AddNewProEdit(restoranDegistirPanel1, 'restoranTuruDegistir', 'Restoran Puan:');
+  clComponent.SetupComponent(restoranPuanDegistir,'{
+  "MarginBottom": 350,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  restoranPuanDegistir.clTypeOfField = taFloat; 
+  
+  restoranUcretDegistir=restoranDegistir.AddNewProEdit(restoranDegistirPanel1, 'restoranUcretDegistir', 'Restoran ortalama yemek fiyatları:');
+  clComponent.SetupComponent(restoranUcretDegistir,'{
+  "MarginBottom": 250,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  restoranUcretDegistir.clTypeOfField = taFloat; 
+  
+  restoranYorumDegistir=restoranDegistir.AddNewProEdit(restoranDegistirPanel1, 'restoranYorumDegistir', 'Restoran Yorumu:');
+  clComponent.SetupComponent(restoranYorumDegistir,'{
+  "MarginBottom": 150,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+   restoranDegisiklikKaydet=restoranDegistir.AddNewProButton(restoranDegistirPanel1, 'restoranDegisiklikKaydet', ' Güncellemeleri Kaydet');
+   clComponent.SetupComponent(restoranDegisiklikKaydet,'{
+   "MarginTop":500,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :230, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#e2c1c8"
+    }');
+    
+  restoranDegistir.AddNewEvent(restoranDegisiklikKaydet,tbeOnClick,'UpdateRestoranData');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+   
+  restoranDegistir.Run;
+}

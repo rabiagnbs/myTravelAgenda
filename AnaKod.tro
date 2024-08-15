@@ -1,0 +1,245 @@
+var
+   giris: TclStyleForm;
+   userName, userPassword, email: TClProEdit;
+   girisPanel1: TclProPanel;
+   girisButton, kayitButton: TClProButton;
+   AnaSayfa: TclUnit;
+   seyahatImg, ucakImg: TCLImage;
+   YeniKayit, YeniSeyahat, SeyahatHedef, SeyahatGoruntule, SeyahatEsya: TclUnit;
+   girisKontrol: TCLLabel;
+   myseyahat: TClProLabel;
+   denemeButonn: TClProButton;
+   database, password : String;
+   Qry : TClSQLiteQuery;
+   KameraResim: TclUnit;
+  
+  
+void denemeFonksiyon;
+{
+  giris.clShow;
+  KameraResim.UnitName='KameraResim';
+  KameraResim.CallerForm=giris;
+  KameraResim.Run;
+} 
+
+
+void KullaniciKontrolEt;
+{
+
+ Qry = Clomosy.DBSQLiteQueryWith('SELECT users_username , users_password, users_email FROM Users Where users_username= '+ QuotedStr(userName.Text)+' And users_password='+QuotedStr(userPassword.Text)+' And users_email= '+ QuotedStr(email.Text));
+ Qry.OpenOrExecute;
+
+  
+  if (Qry.Found)
+  {
+    ShowMessage('Başarılı bir şekilde giriş yapıldı ✅');
+    giris.clShow();
+    AnaSayfa.UnitName = 'AnaSayfa';
+    AnaSayfa.CallerForm = giris;
+    AnaSayfa.Run();
+  }
+  else
+  {
+    ShowMessage('Kayıt bulunamadı❗ Lütfen Kayıt Olun.');
+  }
+
+}
+
+void KayitOl;
+{
+  giris.clShow;
+  YeniKayit.UnitName='YeniKayit';
+  YeniKayit.CallerForm=giris;
+  YeniKayit.Run;
+}
+
+
+{
+  giris=TclStyleForm.Create(self);
+  giris.SetFormBGImage('https://i.pinimg.com/564x/8c/d9/16/8cd91636fb363780160fede3f9b7717e.jpg');
+  
+  database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3'
+  password = '';
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+  
+  
+  AnaSayfa=TclUnit.Create;
+  YeniKayit=TclUnit.Create;
+  YeniSeyahat=TclUnit.Create;
+  SeyahatHedef=TclUnit.Create;
+  SeyahatGoruntule=TclUnit.Create;
+  KameraResim=TclUnit.Create;
+  
+  
+  girisPanel1=giris.AddNewProPanel(giris,'girisPanel1');
+  clComponent.SetupComponent(girisPanel1,
+  '{"Align" : "Center",
+  "MarginBottom":100,
+  "MarginTop":100,
+  "Width" :350, 
+  "Height":450,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"#faf0f6"
+  }');
+  
+  seyahatImg=giris.AddNewImage(giris,'seyahatImg');
+  giris.setImage(seyahatImg,'https://i.hizliresim.com/6gglf4e.png');
+  seyahatImg.Height=250;
+  seyahatImg.Width=350;
+  seyahatImg.Align=alTop;
+  
+  
+   myseyahat=giris.AddNewProLabel(girisPanel1, 'myseyahat', 'Benim Seyahat Ajandam ✈️ ');
+   clComponent.SetupComponent(myseyahat,'{
+   "Align" : "Center",
+   "MarginBottom":510,
+   "Width" :380, 
+   "Height":48,
+   "TextColor":"#133f87",
+   "TextSize":25,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#617bcf",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+
+   userName=giris.AddNewProEdit(girisPanel1, 'userName', 'Kullanıcı Adı:');
+   clComponent.SetupComponent(userName,'{
+   "MarginBottom":290,
+   "Width" :250, 
+   "Height":50,
+   "TextColor":"#133f87",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#6f86d1",
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+   
+   userPassword=giris.AddNewProEdit(girisPanel1, 'userPassword', 'Şifre:');
+   clComponent.SetupComponent(userPassword,'{
+   "MarginBottom":160,
+   "Width" :250, 
+   "Height":50,
+   "TextColor":"#133f87",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#6f86d1",
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+   userPassword.Password=True;
+   
+   email=giris.AddNewProEdit(girisPanel1, 'email', 'Email:');
+   clComponent.SetupComponent(email,'{
+   "MarginBottom":30,
+   "Width" :250, 
+   "Height":50,
+   "TextColor":"#133f87",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#6f86d1",
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+   
+
+   girisButton=giris.AddNewProButton(girisPanel1, 'girisButton', 'Giriş Yap');
+   clComponent.SetupComponent(girisButton,'{
+   "MarginTop":160,
+   "TextColor":"#526fcc",
+   "TextWidth":300,
+   "TextHeight":200,
+   "TextSize":17,
+   "Width" :200, 
+   "Height":50,
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderColor":"#617bcf",
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"null"
+   }');
+   
+   kayitButton=giris.AddNewProButton(girisPanel1, 'kayitButton', 'Kayıt Ol');
+   clComponent.SetupComponent(kayitButton,'{
+   "MarginTop":290,
+   "TextColor":"#526fcc",
+   "TextWidth":300,
+   "TextHeight":200,
+   "TextSize":17,
+   "Width" :200, 
+   "Height":50,
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderColor":"#617bcf",
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"null"
+   }');
+   
+   
+ /* denemeButonn=giris.AddNewProButton(girisPanel1, 'denemeButonn', 'deneme');
+  clComponent.SetupComponent(denemeButonn,'{
+  "Align":"alBottom",
+  "TextColor":"#526fcc",
+  "TextWidth":400,
+  "TextHeight":200,
+  "TextSize":17,
+  "Width" :200, 
+  "Height":50,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderColor":"#617bcf",
+  "BorderWidth":2,
+  "TextBold":"yes",
+  "BackGroundColor":"null"
+  }');
+  
+   giris.AddNewEvent(denemeButonn, tbeOnClick, 'denemeFonksiyon'); */
+   
+   
+   giris.AddNewEvent(girisButton,tbeOnClick,'KullaniciKontrolEt');
+   giris.AddNewEvent(kayitButton,tbeOnClick,'KayitOl');
+   
+  /*ucakImg=giris.AddNewImage(giris,'ucakImg');
+  giris.setImage(ucakImg,'https://i.hizliresim.com/5af10tw.png');
+  ucakImg.Height=400;
+  ucakImg.Width=400;
+  ucakImg.Margins.Left=220;
+  ucakImg.Margins.Right=20;
+  ucakImg.Margins.Top=400;
+  ucakImg.Margins.Bottom=5;*/
+  
+  
+  girisKontrol=giris.AddNewLabel(girisPanel1,'girisKontrol','🔹 Üyeliğiniz bulunmuyorsa lütfen kayıt olunuz.');
+  girisKontrol.Height = 50;
+  girisKontrol.Width = 300;
+  girisKontrol.Margins.Top = 400;
+  girisKontrol.Margins.Bottom = 10;
+  girisKontrol.Margins.Left=70;
+  girisKontrol.StyledSettings = ssFamily;
+  girisKontrol.textSettings.Font.Size = 12;
+  girisKontrol.textSettings.FontColor = clAlphaColor.clHexToColor('#526fcc');
+  
+ 
+   giris.Run;
+}

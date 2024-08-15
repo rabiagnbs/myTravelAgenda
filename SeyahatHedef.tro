@@ -1,0 +1,387 @@
+var
+  seyahatHedef, hedefGoruntule: TclStyleForm;
+  seyahatHedefPanel1, hedefGoruntulePanel1: TclProPanel;
+  today: TclDateTime;
+  tarih, hedefLabel: TClProLabel;
+  tarihYazi: String;
+  hedefUlke, hedefSehir, hedefGezi, hedefEsya, hedefAraUlke, hedefAraSehir: TclProEdit;
+  hedefZaman: TclDateTime;
+  gunH,ayH,yilH, dogruTarihH: TclString;
+  VerticalScrollBox, VerticalScrollBox1 : TclVertScrollBox;
+  seyahatHedefKayit, hedefGoruntuleButton, araButton: TClProButton;
+  database, password, date : String;
+  hedefListView : TClListView;
+  Qry : TClSQLiteQuery;
+  i: Integer;
+  hedefGoruntuleLabel: TCLLabel;
+  clRest:TclRest;
+  qryR: TCLJSONQuery;
+  qryString: String;
+
+
+  
+  
+void ResimEkle;
+{
+  clRest=TCLRest.Create;
+  clRest.BaseURL = 'https://api.collectapi.com/imdb/imdbSearchByName?query='+hedefAraUlke.text;
+  clRest.Accept = 'application/json';
+  clRest.Method = rmGET;
+  clRest.AddHeader('Authorization','apikey 1sHfdG8TMhDkH8EC5mvJWe:7KihkVkAUEfW1z4aM8ZBIM'); 
+  clRest.Execute;
+    
+    qryR= Clomosy.ClDataSetFromJSON(clRest.Response);
+    with qry do
+     {
+      qryString=FieldByName('result').AsString;
+     }
+     ShowMessage(clRest.Response);
+
+    qryR= Clomosy.ClDataSetFromJSON(qryString);
+    with qryR do
+     {
+      qryString=FieldByName('Title').AsString;
+     }
+     ShowMessage(qryString);
+}
+  
+  
+void getData;
+{
+    try
+    Qry = Clomosy.DBSQLiteQueryWith('SELECT goal_id,  goal_city, goal_date, goal_place, goal_item FROM Goals WHERE goal_country = '+ QuotedStr(hedefAraUlke.Text)+ 'And goal_city= '+QuotedStr(hedefAraSehir.Text));
+    Qry.OpenOrExecute;
+ 
+ for i = 0 to Qry.RecordCount-1   
+ {
+
+   hedefGoruntuleLabel.Text=
+   ' Şehir Bilgi: ' + Qry.FieldByName('goal_city').AsString + #13#10 +
+   ' Gezilecek Yerler Bilgi : '+ Qry.FieldByName('goal_place').AsString + #13#10 +
+   ' Tarih: '+ Qry.FieldByName('goal_date').AsString + #13#10 +
+   ' Alıncak Eşyalar: ' +Qry.FieldByName('goal_item').AsString;
+   
+ }
+ 
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+}
+  
+void HedefKayit;
+{
+
+  gunH = clGetStringTo(hedefZaman.Date,'.');
+  yilH = clGetStringAfter(hedefZaman.Date, '.');
+  ayH = clGetStringTo(yilH, '.');
+  yilH = clGetStringAfter(yilH, '.');
+  
+  dogruTarihH = yilH + '-' + ayH + '-' + gunH;
+  
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Goals (goal_country, goal_city, goal_date, goal_place, goal_item) VALUES ('+QuotedStr(hedefUlke.Text)+', '+QuotedStr(hedefSehir.Text)+',
+    '+QuotedStr(dogruTarihH)+','+QuotedStr(hedefGezi.Text)+','+QuotedStr(hedefEsya.Text)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Seyahat Hedefleriniz Başarılı Bir Şekilde Eklenmiştir✅');
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+void HedefGoruntuleSayfa;
+{
+  hedefGoruntule=TclStyleForm.Create(self);
+  hedefGoruntule.SetFormBGImage('https://i.pinimg.com/originals/6d/c4/9a/6dc49af11ec6d6147b27b950e1c090b9.jpg');
+  
+  hedefAraUlke=hedefGoruntule.AddNewProEdit(hedefGoruntule, 'hedefAraUlke', 'Ülke İsmi');
+  clComponent.SetupComponent(hedefAraUlke,'{
+  "MarginTop":180,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  hedefAraSehir=hedefGoruntule.AddNewProEdit(hedefGoruntule, 'hedefAraSehir', 'Şehir İsmi');
+  clComponent.SetupComponent(hedefAraSehir,'{
+  "MarginTop":280,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  araButton=hedefGoruntule.AddNewProButton(hedefGoruntule, 'araButton', 'Ara');
+  clComponent.SetupComponent(araButton,'{
+   "MarginTop":450,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#e4e0f3",
+  "TextSize":15,
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":10,
+  "RoundWidth":10,
+  "BorderWidth":1,
+  "BackGroundColor":"null"
+  }');
+  
+  hedefGoruntule.AddNewEvent(araButton,tbeOnClick, 'ResimEkle');
+  
+  hedefGoruntulePanel1=hedefGoruntule.AddNewProPanel(hedefGoruntule,'hedefGoruntulePanel1');
+  clComponent.SetupComponent(hedefGoruntulePanel1,
+  '{
+  "MarginBottom":550,
+  "Width" :400, 
+  "Height":200,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"#f7f5f5"
+  }');
+  
+  
+  VerticalScrollBox1 = hedefGoruntule.AddNewVertScrollBox(hedefGoruntulePanel1,'ScrollY');
+  VerticalScrollBox1.Align = alClient;
+  VerticalScrollBox1.Margins.Top=10;
+  VerticalScrollBox1.Margins.Bottom=10;
+  
+  hedefGoruntuleLabel= hedefGoruntule.AddNewProLabel(VerticalScrollBox1,'hedefGoruntuleLabel','');
+  clComponent.SetupComponent(hedefGoruntuleLabel,'{
+  "Align" : "alClient",
+  "Width": 400,
+  "Height": 200,
+  "TextColor":"#515151",
+  "TextSize":18,
+  "TextBold":"yes",
+  "TextHorizontalAlign":"left"
+   }');
+  
+   hedefGoruntule.AddNewEvent(araButton,tbeOnClick,'getData');
+
+   hedefGoruntule.Run;
+}
+
+  
+  
+{
+  seyahatHedef=TclStyleForm.Create(self);
+  seyahatHedef.SetFormBGImage('https://i.pinimg.com/originals/6d/c4/9a/6dc49af11ec6d6147b27b950e1c090b9.jpg');
+  
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+
+
+  seyahatHedefPanel1=seyahatHedef.AddNewProPanel(seyahatHedef,'seyahatHedefPanel1');
+  clComponent.SetupComponent(seyahatHedefPanel1,
+  '{
+  "MarginBottom":100,
+  "MarginTop":100,
+  "Width" :350, 
+  "Height":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+  VerticalScrollBox = seyahatHedef.AddNewVertScrollBox(seyahatHedefPanel1,'ScrollY');
+  VerticalScrollBox.Align = alMostTop;
+  VerticalScrollBox.Height = TForm(seyahatHedef).clientHeight;
+  
+  
+  hedefLabel=seyahatHedef.AddNewProLabel(seyahatHedef,'hedefLabel','Bu yıl için seyahat hedeflerini giriniz:');
+  clComponent.SetupComponent(hedefLabel,'{
+  "MarginTop":50,
+  "MarginBottom":700,
+  "Width" :400, 
+  "Height":40,
+  "TextColor":"#133f87",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"null"
+  }');
+  
+   hedefUlke=seyahatHedef.AddNewProEdit(VerticalScrollBox, 'hedefUlke', 'Gitmeyi hedeflediğiniz ülke nedir?');
+   clComponent.SetupComponent(hedefUlke,'{
+  "MarginBottom": 1200,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":20,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+   
+   hedefSehir=seyahatHedef.AddNewProEdit(VerticalScrollBox, 'hedefSehir', 'Gitmeyi hedeflediğiniz şehir nedir?');
+   clComponent.SetupComponent(hedefSehir,'{
+  "MarginBottom": 1100,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+   
+  hedefZaman = seyahatHedef.AddNewProDateEdit(VerticalScrollBox, 'hedefZaman');
+  clComponent.SetupComponent(hedefZaman,'{
+   "MarginBottom":900,
+   "Width" :300, 
+   "Height":40,
+   "TextColor":"#12366b",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#ffffff",
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderWidth":1,
+   "BackGroundColor":"#f8f8f8"
+   }');
+   
+  
+  hedefGezi=seyahatHedef.AddNewProEdit(VerticalScrollBox, 'hedefGezi', 'Gezmek istediğiniz yerler neler?');
+  clComponent.SetupComponent(hedefGezi,'{
+  "MarginBottom": 800,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  hedefEsya=seyahatHedef.AddNewProEdit(VerticalScrollBox, 'hedefEsya', 'Seyahatinizde Almak istediğiniz eşyalar neler?');
+  clComponent.SetupComponent(hedefEsya,'{
+  "MarginBottom": 700,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":18,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+  
+  tarih=seyahatHedef.AddNewProLabel(VerticalScrollBox,'tarih','Gitmek istediğiniz tarihi giriniz:');
+  clComponent.SetupComponent(tarih,'{
+  "MarginBottom":1000,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#12366b",
+  "TextSize":15,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"#f8f8f8"
+  }');
+   
+  gunH = clGetStringTo(hedefZaman.Date,'.');
+  yilH = clGetStringAfter(hedefZaman.Date, '.');
+  ayH = clGetStringTo(yilH, '.');
+  yilH = clGetStringAfter(yilH, '.');
+  
+  dogruTarihH = yilH + '-' + ayH + '-' + gunH;
+  
+  seyahatHedefKayit=seyahatHedef.AddNewProButton(VerticalScrollBox, 'seyahatHedefKayit', 'Hedeflerinizi Kaydedin');
+  clComponent.SetupComponent(seyahatHedefKayit,'{
+  "MarginBottom":600,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#f3f3f3",
+  "TextSize":15,
+  "TextVerticalAlign":"center",
+  "TextHorizontalAlign":"center",
+  "TextBold":"yes",
+  "BorderColor":"#ffffff",
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BorderWidth":1,
+  "BackGroundColor":"null"
+  }');
+  
+  seyahatHedef.AddNewEvent(seyahatHedefKayit,tbeOnClick,'HedefKayit');
+  
+  hedefGoruntuleButton=seyahatHedef.AddNewProButton(VerticalScrollBox, 'hedefGoruntuleButton', 'Hedefleri Görüntüle');
+  clComponent.SetupComponent(hedefGoruntuleButton,'{
+  "MarginBottom":200,
+  "Width" :300, 
+  "Height":40,
+  "TextColor":"#e4e0f3",
+  "TextSize":15,
+  "TextBold":"yes",
+  "BorderColor":"#6f86d1",
+  "RoundHeight":10,
+  "RoundWidth":10,
+  "BorderWidth":1,
+  "BackGroundColor":"null"
+  }');
+  
+  seyahatHedef.AddNewEvent(hedefGoruntuleButton, tbeOnClick, 'HedefGoruntuleSayfa');
+  seyahatHedef.Run;
+  
+  database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3' ;
+  password = '';
+  
+
+ /* try
+      Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+    
+    Clomosy.DBSQLiteQuery.Sql.Text = 'CREATE TABLE Goals(goal_id INTEGER PRIMARY KEY AUTOINCREMENT, goal_country Text, goal_city Text, goal_date Date, goal_place Text, goal_item Text)';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanı  eklenmiiştir.');
+  except
+   ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }*/
+  
+}

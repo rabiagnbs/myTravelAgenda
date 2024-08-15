@@ -1,0 +1,238 @@
+var
+camera:TclStyleForm;
+CameraBtn, CameraBtn1, CameraBtn2, CameraBtn3, CameraBtn4:TclButton;
+CameraImg, CameraImg1, CameraImg2, CameraImg3, CameraImg4:TClImage;
+KameraResimPanel CameraPanel, CameraPanel1, CameraPanel2, CameraPanel3, CameraPanel4: TclProPanel;
+VerticalScrollBox5: TCLVertScrollBox;
+resimEkle: TclProLabel;
+hedefUlkeIsim1: TCLComboBox;
+Qry7: TClSQLiteQuery;
+resimEkle1: TclLabel;
+resimEkleButton: TClProButton;
+
+void onbtnClick;
+{
+  Clomosy.ImageChooser(camera, CameraImg);
+}
+
+{
+
+camera= TClStyleForm.Create(Self);
+camera.SetFormBGImage('https://i.pinimg.com/originals/a7/78/4b/a7784b4d10491036a22e69084a6c8c1c.jpg');
+
+resimEkle =camera.AddNewProLabel(camera,'resimEkle','Seyahatinizden Geri Kalanlar...');
+   clComponent.SetupComponent(resimEkle,'{
+   "MarginBottom":750,
+   "Width" :400,
+   "Height":50,
+   "TextColor":"#6c73cc",
+   "TextSize":20,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#3552ae",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":3,
+   "BackGroundColor":"null"
+   }');
+
+  KameraResimPanel=camera.AddNewProPanel(camera, 'KameraResimPanel');
+  clComponent.SetupComponent(KameraResimPanel,
+  '{
+  "MarginLeft":10,
+  "MarginRight":10,
+  "MarginTop":350,
+  "Height":1000,
+  "Width":500,
+  "RoundHeight":20,
+  "RoundWidth":20,
+  "BackGroundColor":"null"
+  }');
+  
+  VerticalScrollBox5 = camera.AddNewVertScrollBox(KameraResimPanel,'ScrollY');
+  VerticalScrollBox5.Align = alClient;
+
+CameraPanel=camera.AddNewProPanel(VerticalScrollBox5, 'CameraPanel');
+ clComponent.SetupComponent(CameraPanel,
+  '{"MarginBottom":1100,
+  "MarginLeft":10,
+  "MarginRight":170,
+  "Width" :150, 
+  "Height":150,
+  "RoundHeight":10,
+  "RoundWidth":10,
+  "BorderWidth":2,
+  "BorderColor":"#9fb5e3"}');
+
+CameraBtn = camera.AddNewButton(CameraPanel, 'CameraBtn','');
+camera.AddNewEvent(CameraBtn, tbeOnClick, 'onbtnClick');
+CameraBtn.Width=100;
+CameraBtn.Height=30;
+CameraBtn.Margins.Top = 150;
+CameraBtn.Margins.Bottom=300;
+
+CameraImg = camera.AddNewImage(CameraPanel, 'CameraImg');
+camera.setImage(CameraImg,'https://i.hizliresim.com/6mn32or.png');
+CameraImg.Margins.Top = 180;
+CameraImg.Margins.Bottom=170;
+CameraImg.Height = 150;
+CameraImg.Width = 150;
+
+CameraPanel1=camera.AddNewProPanel(VerticalScrollBox5, 'CameraPanel1');
+ clComponent.SetupComponent(CameraPanel1,
+  '{"MarginBottom":850,
+  "MarginLeft":170,
+  "MarginRight":10,
+  "Width" :150, 
+  "Height":150,
+  "RoundHeight":10,
+  "RoundWidth":10,
+  "BorderWidth":2,
+  "BorderColor":"#9fb5e3"}');
+
+CameraBtn1 = camera.AddNewButton(CameraPanel1, 'CameraBtn1','');
+camera.AddNewEvent(CameraBtn1, tbeOnClick, 'onbtnClick');
+CameraBtn1.Width=100;
+CameraBtn1.Height=30;
+CameraBtn1.Margins.Top = 150;
+CameraBtn1.Margins.Bottom=300;
+
+CameraImg1 = camera.AddNewImage(CameraPanel1, 'CameraImg1');
+camera.setImage(CameraImg1,'https://i.hizliresim.com/6mn32or.png');
+CameraImg1.Margins.Top = 180;
+CameraImg1.Margins.Bottom=170;
+CameraImg1.Height = 150;
+CameraImg1.Width = 150;
+
+
+CameraPanel2=camera.AddNewProPanel(VerticalScrollBox5, 'CameraPanel2');
+ clComponent.SetupComponent(CameraPanel2,
+  '{"MarginBottom":600,
+  "MarginLeft":10,
+  "MarginRight":170,
+  "Width" :150, 
+  "Height":150,
+  "RoundHeight":10,
+  "RoundWidth":10,
+  "BorderWidth":2,
+  "BorderColor":"#9fb5e3"}');
+
+CameraBtn2 = camera.AddNewButton(CameraPanel2, 'CameraBtn2','');
+camera.AddNewEvent(CameraBtn2, tbeOnClick, 'onbtnClick');
+CameraBtn2.Width=100;
+CameraBtn2.Height=30;
+CameraBtn2.Margins.Top = 150;
+CameraBtn2.Margins.Bottom=300;
+
+CameraImg2 = camera.AddNewImage(CameraPanel2, 'CameraImg2');
+camera.setImage(CameraImg2,'https://i.hizliresim.com/6mn32or.png');
+CameraImg2.Margins.Top = 180;
+CameraImg2.Margins.Bottom=170;
+CameraImg2.Height = 150;
+CameraImg2.Width = 150;
+
+CameraPanel3=camera.AddNewProPanel(VerticalScrollBox5, 'CameraPanel3');
+ clComponent.SetupComponent(CameraPanel3,
+  '{"MarginBottom":350,
+  "MarginLeft":170,
+  "MarginRight":10,
+  "Width" :150, 
+  "Height":150,
+  "RoundHeight":10,
+  "RoundWidth":10,
+  "BorderWidth":2,
+  "BorderColor":"#9fb5e3"}');
+
+CameraBtn3 = camera.AddNewButton(CameraPanel3, 'CameraBtn3','');
+camera.AddNewEvent(CameraBtn3, tbeOnClick, 'onbtnClick');
+CameraBtn3.Width=100;
+CameraBtn3.Height=30;
+CameraBtn3.Margins.Top = 150;
+CameraBtn3.Margins.Bottom=300;
+
+CameraImg3 = camera.AddNewImage(CameraPanel3, 'CameraImg3');
+camera.setImage(CameraImg3,'https://i.hizliresim.com/6mn32or.png');
+CameraImg3.Margins.Top = 180;
+CameraImg3.Margins.Bottom=170;
+CameraImg3.Height = 150;
+CameraImg3.Width = 150;
+
+CameraPanel4=camera.AddNewProPanel(VerticalScrollBox5, 'CameraPanel4');
+ clComponent.SetupComponent(CameraPanel4,
+  '{"MarginBottom":100,
+  "MarginLeft":10,
+  "MarginRight":170,
+  "Width" :150, 
+  "Height":150,
+  "RoundHeight":10,
+  "RoundWidth":10,
+  "BorderWidth":2,
+  "BorderColor":"#9fb5e3"}');
+
+CameraBtn4 = camera.AddNewButton(CameraPanel4, 'CameraBtn4','');
+camera.AddNewEvent(CameraBtn4, tbeOnClick, 'onbtnClick');
+CameraBtn4.Width=100;
+CameraBtn4.Height=30;
+CameraBtn4.Margins.Top = 150;
+CameraBtn4.Margins.Bottom=300;
+
+CameraImg4 = camera.AddNewImage(CameraPanel4, 'CameraImg4');
+camera.setImage(CameraImg4,'https://i.hizliresim.com/6mn32or.png');
+CameraImg4.Margins.Top = 180;
+CameraImg4.Margins.Bottom=170;
+CameraImg4.Height = 150;
+CameraImg4.Width = 150;
+
+   hedefUlkeIsim1 = camera.AddNewComboBox(VerticalScrollBox5,'hedefUlkeIsim1');
+   hedefUlkeIsim1.Width = 150;
+   hedefUlkeIsim1.Position.Y=480;
+   hedefUlkeIsim1.Position.X=280;
+
+   
+   try
+    Qry7 = Clomosy.DBSQLiteQueryWith('SELECT goal_country FROM Goals');
+    Qry7.OpenOrExecute;
+    
+    while(not (Qry7.Eof))
+   {
+  	hedefUlkeIsim1.AddItem(Qry7.FieldByName('goal_country').AsString,Qry7.FieldByName('goal_country').AsString);
+  	Qry7.Next;
+   }
+ 
+    except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+  
+  resimEkle1=camera.AddNewLabel(VerticalScrollBox5,'resimEkle1','Gittiğiniz Ülke:');
+  resimEkle1.Width=150;
+  resimEkle1.Height=30;
+  resimEkle1.Margins.Left = 250;
+  resimEkle1.Margins.Bottom = 80;
+  resimEkle1.textSettings.FontColor = clAlphaColor.clHexToColor('#6c73cc');
+  resimEkle1.StyledSettings = ssFamily;
+  resimEkle1.textSettings.Font.Size = 18;
+  
+  
+   resimEkleButton=camera.AddNewProButton(VerticalScrollBox5, 'resimEkleButton', ' Bilgileri Kaydet');
+   clComponent.SetupComponent(resimEkleButton,'{
+   "MarginTop":70,
+   "TextColor":"#fef8fd",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width":150, 
+   "Height":30,
+   "MarginRight":10,
+   "MarginLeft":220,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":1,
+   "TextBold":"yes",
+   "BackGroundColor":"#6c8bcc",
+   "BorderColor": "#fbfaf5"
+    }');
+
+camera.Run;
+
+}

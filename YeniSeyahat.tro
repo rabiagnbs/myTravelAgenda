@@ -1,0 +1,373 @@
+var
+  yeniseyahat:TclStyleForm;
+  yeniUlkeEdit, yeniSehirEdit, paraBirimiEdit: TclProEdit;
+  VerticalScrollBox: TclVertScrollBox;
+  muzeSayi, restoranSayi: TclNumberBox;
+  muze, restoran, yurt, ulasim: TclLabel;
+  muzeKayit, restoranKayit, yurtKayit, ulasimKayit, bilgileriKaydet: TClProButton;
+  muzePanel, restoranPanel, yurtPanel, ulasimPanel: TclProPanel;
+  MuzeBilgileri: TclUnit;
+  RestoranBilgileri: TclUnit;
+  YurtBilgileri: TclUnit;
+  UlasimBilgileri: TclUnit;
+  yurtTipi: TCLComboBox;
+  muze_sayi, restoran_sayi: Integer;
+  database, password : String;
+
+void MuzeyeGit;
+{
+  yeniseyahat.clShow;
+  MuzeBilgileri.UnitName='MuzeBilgileri';
+  MuzeBilgileri.CallerForm=yeniseyahat;
+  MuzeBilgileri.Run;
+}
+
+
+void RestoranaGit;
+{
+  yeniseyahat.clShow;
+  RestoranBilgileri.UnitName='RestoranBilgileri';
+  RestoranBilgileri.CallerForm=yeniseyahat;
+  RestoranBilgileri.Run;
+}
+
+void YurdaGit;
+{
+  yeniseyahat.clShow;
+  YurtBilgileri.UnitName='YurtBilgileri';
+  YurtBilgileri.CallerForm=yeniseyahat;
+  YurtBilgileri.Run;
+}
+
+void ulasimaGit;
+{
+  yeniseyahat.clShow;
+  UlasimBilgileri.UnitName='UlasimBilgileri';
+  UlasimBilgileri.CallerForm=yeniseyahat;
+  UlasimBilgileri.Run;
+}
+
+void topluBilgileriKaydet;
+{
+  try
+    Clomosy.DBSQLiteQuery.SQL.Text = 'INSERT INTO Travels (country_name, city_name, currency, museum_sayi, restaurant_sayi) VALUES ('+QuotedStr(yeniUlkeEdit.Text)+', '+QuotedStr(yeniSehirEdit.Text)+',
+    '+QuotedStr(paraBirimiEdit.Text)+', '+QuotedStr(muze_sayi)+', '+QuotedStr(restoran_sayi)+')';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    ShowMessage('Bilgiler Başarılı Bir Şekilde Kaydedildi✅');
+  except
+    ShowMessage('Exception class: '+LastExceptionClassName+' Exception Message: ' +LastExceptionMessage);
+  } 
+}
+
+
+{
+  yeniseyahat=TclStyleForm.Create(self);
+  yeniseyahat.SetFormBGImage('https://i.pinimg.com/originals/a7/78/4b/a7784b4d10491036a22e69084a6c8c1c.jpg');
+  MuzeBilgileri=TclUnit.Create;
+  RestoranBilgileri=TclUnit.Create;
+  YurtBilgileri=TclUnit.Create;
+  UlasimBilgileri=TclUnit.Create;
+
+  Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+  
+  VerticalScrollBox = yeniseyahat.AddNewVertScrollBox(yeniseyahat,'ScrollY');
+  VerticalScrollBox.Align = alMostTop;
+  VerticalScrollBox.Height = TForm(yeniseyahat).clientHeight;
+  
+
+   yeniUlkeEdit=yeniseyahat.AddNewProEdit(VerticalScrollBox, 'yeniUlkeEdit', 'Ülke İsmi');
+   clComponent.SetupComponent(yeniUlkeEdit,'{
+   "MarginBottom": 1400,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#35115c",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#35115c",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+   
+   
+   yeniSehirEdit=yeniseyahat.AddNewProEdit(VerticalScrollBox, 'yeniSehirEdit', 'Şehir İsmi');
+   clComponent.SetupComponent(yeniSehirEdit,'{
+   "MarginBottom": 1250,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#35115c",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#35115c",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+   
+    paraBirimiEdit=yeniseyahat.AddNewProEdit(VerticalScrollBox, 'paraBirimiEdit', ' 💷 Para Birimi 💵 ');
+   clComponent.SetupComponent(paraBirimiEdit,'{
+   "MarginBottom":1100,
+   "Width" :400, 
+   "Height":50,
+   "TextColor":"#35115c",
+   "TextSize":18,
+   "TextVerticalAlign":"center",
+   "TextHorizontalAlign":"center",
+   "TextBold":"yes",
+   "BorderColor":"#35115c",
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "BackGroundColor":"null"
+   }');
+   
+
+    muzePanel=yeniseyahat.AddNewProPanel(VerticalScrollBox,'muzePanel');
+    clComponent.SetupComponent(muzePanel,'{
+    "MarginBottom":880,
+    "Width" :400, 
+    "Height":80,
+    "RoundHeight":15,
+    "RoundWidth":15,
+    "BorderColor":"#35115c",
+    "BackGroundColor":"#e7c4ff"
+     }');
+     
+    
+    muzeSayi = yeniseyahat.AddNewNumberBox(muzePanel,'muzeSayi');
+    muzeSayi.Margins.Top=40;
+    muzeSayi.Margins.Bottom=80;
+    muzeSayi.Margins.Left= 200;
+    muzeSayi.Margins.Right= 50;
+    muzeSayi.Value = 5;
+    muzeSayi.Min = 0; 
+    muzeSayi.Max = 10; 
+    
+    muze_sayi=muzeSayi.value;
+
+    
+  
+    muze=yeniseyahat.AddNewLabel(muzePanel,'muze','Gittiğiniz Müze Sayısını Giriniz: ');
+    muze.Margins.Top=40;
+    muze.Margins.Bottom=80;
+    muze.Height=40;
+    muze.Width=140;
+    muze.Margins.Left=80;
+    muze.Margins.Right=200;
+    muze.TextSettings.Font.Size=15;
+    muze.StyledSettings = ssFamily;
+    muze.TextSettings.FontColor = clAlphaColor.clHexToColor('#8f62cc');
+    
+    
+   muzeKayit=yeniseyahat.AddNewProButton(muzePanel, 'muzeKayit', '🗽Müze Bilgileri🗝️');
+   clComponent.SetupComponent(muzeKayit,'{
+   "MarginBottom":10,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :150, 
+   "Height":40,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BorderColor":"#b186da",
+   "BackGroundColor":"#b186da"
+   }'); 
+    
+   yeniseyahat.AddNewEvent(muzeKayit,tbeOnClick,'MuzeyeGit');
+     
+     
+   restoranPanel=yeniseyahat.AddNewProPanel(VerticalScrollBox,'restoranPanel');
+   clComponent.SetupComponent(restoranPanel,'{
+   "MarginBottom":660,
+   "Width" :400, 
+   "Height":80,
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderColor":"#35115c",
+   "BackGroundColor":"#e7c4ff"
+    }');
+     
+    
+   restoranSayi = yeniseyahat.AddNewNumberBox(restoranPanel,'restoranSayi');
+   restoranSayi.Margins.Top=40;
+   restoranSayi.Margins.Bottom=80;
+   restoranSayi.Margins.Left= 200;
+   restoranSayi.Margins.Right= 50;
+   restoranSayi.Value = 5;
+   restoranSayi.Min = 0; 
+   restoranSayi.Max = 10; 
+   
+   restoran_sayi=restoranSayi.value;
+   
+   
+   restoran=yeniseyahat.AddNewLabel(restoranPanel,'restoran','Gittiğiniz restoran Sayısını Giriniz : ');
+   restoran.Margins.Top=40;
+   restoran.Margins.Bottom=80;
+   restoran.Height=40;
+   restoran.Width=150;
+   restoran.Margins.Left=85;
+   restoran.Margins.Right=200;
+   restoran.TextSettings.Font.Size=15;
+   restoran.StyledSettings = ssFamily;
+   restoran.TextSettings.FontColor = clAlphaColor.clHexToColor('#8f62cc');
+    
+    
+   restoranKayit=yeniseyahat.AddNewProButton(restoranPanel, 'restoranKayit', '🍜 Restoran Bilgileri🍍');
+   clComponent.SetupComponent(restoranKayit,'{
+   "MarginBottom":10,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :180, 
+   "Height":40,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BorderColor":"#b186da",
+   "BackGroundColor":"#b186da"
+    }'); 
+     
+   yeniseyahat.AddNewEvent(restoranKayit,tbeOnClick,'RestoranaGit');
+    
+   yurtPanel=yeniseyahat.AddNewProPanel(VerticalScrollBox,'yurtPanel');
+   clComponent.SetupComponent(yurtPanel,'{
+   "MarginBottom":440,
+   "Width" :400, 
+   "Height":80,
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderColor":"#35115c",
+   "BackGroundColor":"#e7c4ff"
+   }');
+     
+    
+   yurt=yeniseyahat.AddNewLabel(yurtPanel,'yurt',' Konaklama Bilgilerini Giriniz');
+   yurt.Margins.Top=40;
+   yurt.Margins.Bottom=80;
+   yurt.Height=20;
+   yurt.Width=280;
+   yurt.Margins.Left=100;
+   yurt.Margins.Right=50;
+   yurt.TextSettings.Font.Size=15;
+   yurt.StyledSettings = ssFamily;
+   yurt.TextSettings.FontColor = clAlphaColor.clHexToColor('#8f62cc');
+    
+    
+   yurtKayit=yeniseyahat.AddNewProButton(yurtPanel, 'yurtKayit', '🏠 Konaklama Bilgileri 🏫');
+   clComponent.SetupComponent(yurtKayit,'{
+   "MarginBottom":10,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :190, 
+   "Height":40,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BorderColor":"#b186da",
+   "BackGroundColor":"#b186da"
+    }'); 
+    
+   yeniseyahat.AddNewEvent(yurtKayit,tbeOnClick,'YurdaGit');
+    
+  
+   ulasimPanel=yeniseyahat.AddNewProPanel(VerticalScrollBox,'ulasimPanel');
+   clComponent.SetupComponent(ulasimPanel,'{
+   "MarginBottom":200,
+   "Width" :400, 
+   "Height":80,
+   "RoundHeight":20,
+   "RoundWidth":20,
+   "BorderColor":"#35115c",
+   "BackGroundColor":"#e7c4ff"
+   }');
+   
+   ulasim=yeniseyahat.AddNewLabel(ulasimPanel,'ulasim','Şehir Içi ve Şehirler Arası Ulaşım');
+   ulasim.Margins.Top=40;
+   ulasim.Margins.Bottom=80;
+   ulasim.Height=20;
+   ulasim.Width=280;
+   ulasim.Margins.Left=90;
+   ulasim.Margins.Right=50;
+   ulasim.TextSettings.Font.Size=15;
+   ulasim.StyledSettings = ssFamily;
+   ulasim.TextSettings.FontColor = clAlphaColor.clHexToColor('#8f62cc');
+     
+    ulasimKayit=yeniseyahat.AddNewProButton(ulasimPanel, 'ulasimKayit', ' 🚖 Ulaşım Bilgileri 🚉 ');
+   clComponent.SetupComponent(ulasimKayit,'{
+   "MarginBottom":10,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :180, 
+   "Height":40,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BorderColor":"#b186da",
+   "BackGroundColor":"#b186da"
+    }'); 
+    
+   yeniseyahat.AddNewEvent(ulasimKayit,tbeOnClick,'ulasimaGit');
+
+   bilgileriKaydet=yeniseyahat.AddNewProButton(VerticalScrollBox, 'bilgileriKaydet', ' Bilgileri Kaydet ');
+    clComponent.SetupComponent(bilgileriKaydet,'{
+   "MarginBottom":70,
+   "MarginTop":65,
+   "TextColor":"#fae6fc",
+   "TextWidth":50,
+   "TextHeight":10,
+   "TextSize":15,
+   "Width" :400, 
+   "Height":50,
+   "RoundHeight":10,
+   "RoundWidth":10,
+   "BorderWidth":2,
+   "TextBold":"yes",
+   "BackGroundColor":"#a567bd"
+    }');
+  
+  yeniseyahat.AddNewEvent(bilgileriKaydet, tbeOnClick, 'topluBilgileriKaydet');
+  
+
+
+  database = Clomosy.AppFilesPath + 'ClomosyDatabase.db3';   
+  password = '';
+
+/*  try
+      Clomosy.DBSQLiteConnect(Clomosy.AppFilesPath + 'ClomosyDatabase.db3', '');
+    
+    Clomosy.DBSQLiteQuery.Sql.Text = 'Create TABLE Travels(
+  travel_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   country_name TEXT, city_name TEXT, currency TEXT, museum_sayi INTEGER, restaurant_sayi INTEGER
+   );';
+    Clomosy.DBSQLiteQuery.OpenOrExecute;
+    
+    ShowMessage('Veri tabanı eklenmiştir.');
+  except
+   ShowMessage('Exception Class: '+LastExceptionClassName+' Exception Message: '+LastExceptionMessage);
+  }*/
+
+    
+  yeniseyahat.Run;
+  
+}
